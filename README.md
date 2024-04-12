@@ -1,4 +1,4 @@
-# control-transfer-diffusion
+# Combining audio control and style transfer using latent diffusion
 
 Official repository of the paper "Combining audio control and style transfer using latent diffusion".
 
