@@ -12,21 +12,19 @@ In this paper, we aim to unify explicit control and style transfer within a sing
 ## Reconstruction
 
 
-| | | original | midi synthesis | SpecDiff | Ours with encoder | Ours |
-| :-:| :-:  | :-: | :-: | :-: | :-: | :-: |
-| Piano  | <img src="images/midi-to-audio/1.png" controls style="width:400px" >  |<audio src="eval_timbre_2/x.mp3" controls style="width:  120px"></audio> | <audio src="eval_timbre_2/y.mp3" controls style="width:  120px"></audio> | <audio src="eval_timbre_2/x.mp3" controls style="width:  120px"></audio> | <audio src="eval_timbre_2/y.mp3" controls style="width:  120px"></audio> | <audio src="eval_timbre_2/y.mp3" controls style="width:  120px"></audio> |
-| Violin  |  <img src="images/midi-to-audio/1.png" alt="drawing" controls style="width:  300px" >  | <audio src="eval_timbre_2/x.mp3" controls style="width:  120px"></audio> | <audio src="eval_timbre_2/y.mp3" controls style="width:  120px"></audio> | <audio src="eval_timbre_2/x.mp3" controls style="width:  120px"></audio> | <audio src="eval_timbre_2/y.mp3" controls style="width:  120px"></audio> | <audio src="eval_timbre_2/y.mp3" controls style="width:  120px"></audio> |
-| Guitar   | <img src="images/midi-to-audio/1.png" alt="drawing" controls style="width:  300px" >  | <audio src="eval_timbre_2/x.mp3" controls style="width:  120px"></audio> | <audio src="eval_timbre_2/y.mp3" controls style="width:  120px"></audio> | <audio src="eval_timbre_2/x.mp3" controls style="width:  120px"></audio> | <audio src="eval_timbre_2/y.mp3" controls style="width:  120px"></audio> | <audio src="eval_timbre_2/y.mp3" controls style="width:  120px"></audio> |
-| Guitar   | <img src="images/midi-to-audio/1.png" alt="drawing" controls style="width:  300px" >  | <audio src="eval_timbre_2/x.mp3" controls style="width:  120px"></audio> | <audio src="eval_timbre_2/y.mp3" controls style="width:  120px"></audio> | <audio src="eval_timbre_2/x.mp3" controls style="width:  120px"></audio> | <audio src="eval_timbre_2/y.mp3" controls style="width:  120px"></audio> | <audio src="eval_timbre_2/y.mp3" controls style="width:  120px"></audio> |
+| | | original | SpecDiff | Ours with encoder | Ours |
+| :-:| :-:  | :-: | :-: | :-: | :-: |
+| Piano  | <img src="images/midi-to-audio/1.png" alt="drawing" controls style="width:  300px" >  |<audio src="eval_timbre_2/x.mp3" controls style="width:  100px"></audio> | <audio src="eval_timbre_2/y.mp3" controls style="width:  100px"></audio> | <audio src="eval_timbre_2/x.mp3" controls style="width:  100px"></audio> | <audio src="eval_timbre_2/y.mp3" controls style="width:  100px"></audio> | <audio src="eval_timbre_2/y.mp3" controls style="width:  100px"></audio> |
+| Guitar  | <img src="images/midi-to-audio/1.png" alt="drawing" controls style="width:  300px" >  |<audio src="eval_timbre_2/x.mp3" controls style="width:  100px"></audio> | <audio src="eval_timbre_2/y.mp3" controls style="width:  100px"></audio> | <audio src="eval_timbre_2/x.mp3" controls style="width:  100px"></audio> | <audio src="eval_timbre_2/y.mp3" controls style="width:  100px"></audio> | <audio src="eval_timbre_2/y.mp3" controls style="width:  100px"></audio> |
 
 
 ## Changing the target instrument
 
 
-| | <div style="width:290px"></div>  | original | SpecDiff | Ours with encoder | Ours |
+| | | original | SpecDiff | Ours with encoder | Ours |
 | :-:| :-:  | :-: | :-: | :-: | :-: |
-| Piano to guitar  | <img src="images/midi-to-audio/1.png" alt="drawing" controls style="width:  300px" >  |<audio src="eval_timbre_2/x.mp3" controls style="width:  120px"></audio> | <audio src="eval_timbre_2/y.mp3" controls style="width:  120px"></audio> | <audio src="eval_timbre_2/x.mp3" controls style="width:  120px"></audio> | <audio src="eval_timbre_2/y.mp3" controls style="width:  120px"></audio> | <audio src="eval_timbre_2/y.mp3" controls style="width:  120px"></audio> |
-| Piano to guitar  | <img src="images/midi-to-audio/1.png" alt="drawing" controls style="width:  300px" >  |<audio src="eval_timbre_2/x.mp3" controls style="width:  120px"></audio> | <audio src="eval_timbre_2/y.mp3" controls style="width:  120px"></audio> | <audio src="eval_timbre_2/x.mp3" controls style="width:  120px"></audio> | <audio src="eval_timbre_2/y.mp3" controls style="width:  120px"></audio> | <audio src="eval_timbre_2/y.mp3" controls style="width:  120px"></audio> |
+| Piano to guitar  | <img src="images/midi-to-audio/1.png" alt="drawing" controls style="width:  300px" >  |<audio src="eval_timbre_2/x.mp3" controls style="width:  100px"></audio> | <audio src="eval_timbre_2/y.mp3" controls style="width:  100px"></audio> | <audio src="eval_timbre_2/x.mp3" controls style="width:  100px"></audio> | <audio src="eval_timbre_2/y.mp3" controls style="width:  100px"></audio> | <audio src="eval_timbre_2/y.mp3" controls style="width:  100px"></audio> |
+| Piano to guitar  | <img src="images/midi-to-audio/1.png" alt="drawing" controls style="width:  300px" >  |<audio src="eval_timbre_2/x.mp3" controls style="width:  100px"></audio> | <audio src="eval_timbre_2/y.mp3" controls style="width:  100px"></audio> | <audio src="eval_timbre_2/x.mp3" controls style="width:  100px"></audio> | <audio src="eval_timbre_2/y.mp3" controls style="width:  100px"></audio> | <audio src="eval_timbre_2/y.mp3" controls style="width:  100px"></audio> |
 
 
 
@@ -35,17 +33,11 @@ In this paper, we aim to unify explicit control and style transfer within a sing
 ## Synthetic Data
 
 
-| | Source | Target | <div style="width:60px"></div>| SS-VAE | Music Style Transfer | Ours no adv. | Ours |
-| :-:| :-: | :-:  |:-:  | :-: | :-: | :-: | :-: |
-  | Piano 1|<audio src="eval_timbre_2/x.mp3" controls style="width:  120px"></audio> | <audio src="eval_timbre_2/x.mp3" controls style="width:  120px"></audio> | | <audio src="eval_timbre_2/y.mp3" controls style="width:  120px"></audio> | <audio src="eval_timbre_2/x.mp3" controls style="width:  120px"></audio> | <audio src="eval_timbre_2/y.mp3" controls style="width:  120px"></audio> | <audio src="eval_timbre_2/y.mp3" controls style="width:  120px"></audio> |
-  ||| <audio src="eval_timbre_2/x.mp3" controls style="width:  120px"></audio> | | <audio src="eval_timbre_2/y.mp3" controls style="width:  120px"></audio> | <audio src="eval_timbre_2/x.mp3" controls style="width:  120px"></audio> | <audio src="eval_timbre_2/y.mp3" controls style="width:  120px"></audio> | <audio src="eval_timbre_2/y.mp3" controls style="width:  120px"></audio> |
-||| <audio src="eval_timbre_2/x.mp3" controls style="width:  120px"></audio> | | <audio src="eval_timbre_2/y.mp3" controls style="width:  120px"></audio> | <audio src="eval_timbre_2/x.mp3" controls style="width:  120px"></audio> | <audio src="eval_timbre_2/y.mp3" controls style="width:  120px"></audio> | <audio src="eval_timbre_2/y.mp3" controls style="width:  120px"></audio> |
-| Violin 1|<audio src="eval_timbre_2/x.mp3" controls style="width:  120px"></audio> | <audio src="eval_timbre_2/x.mp3" controls style="width:  120px"></audio> | | <audio src="eval_timbre_2/y.mp3" controls style="width:  120px"></audio> | <audio src="eval_timbre_2/x.mp3" controls style="width:  120px"></audio> | <audio src="eval_timbre_2/y.mp3" controls style="width:  120px"></audio> | <audio src="eval_timbre_2/y.mp3" controls style="width:  120px"></audio> |
-||| <audio src="eval_timbre_2/x.mp3" controls style="width:  120px"></audio> | | <audio src="eval_timbre_2/y.mp3" controls style="width:  120px"></audio> | <audio src="eval_timbre_2/x.mp3" controls style="width:  120px"></audio> | <audio src="eval_timbre_2/y.mp3" controls style="width:  120px"></audio> | <audio src="eval_timbre_2/y.mp3" controls style="width:  120px"></audio> |
-||| <audio src="eval_timbre_2/x.mp3" controls style="width:  120px"></audio> | | <audio src="eval_timbre_2/y.mp3" controls style="width:  120px"></audio> | <audio src="eval_timbre_2/x.mp3" controls style="width:  120px"></audio> | <audio src="eval_timbre_2/y.mp3" controls style="width:  120px"></audio> | <audio src="eval_timbre_2/y.mp3" controls style="width:  120px"></audio> |
-| Guitar|<audio src="eval_timbre_2/x.mp3" controls style="width:  120px"></audio> | <audio src="eval_timbre_2/x.mp3" controls style="width:  120px"></audio> | | <audio src="eval_timbre_2/y.mp3" controls style="width:  120px"></audio> | <audio src="eval_timbre_2/x.mp3" controls style="width:  120px"></audio> | <audio src="eval_timbre_2/y.mp3" controls style="width:  120px"></audio> | <audio src="eval_timbre_2/y.mp3" controls style="width:  120px"></audio> |
-||| <audio src="eval_timbre_2/x.mp3" controls style="width:  120px"></audio> | | <audio src="eval_timbre_2/y.mp3" controls style="width:  120px"></audio> | <audio src="eval_timbre_2/x.mp3" controls style="width:  120px"></audio> | <audio src="eval_timbre_2/y.mp3" controls style="width:  120px"></audio> | <audio src="eval_timbre_2/y.mp3" controls style="width:  120px"></audio> |
-||| <audio src="eval_timbre_2/x.mp3" controls style="width:  120px"></audio> | | <audio src="eval_timbre_2/y.mp3" controls style="width:  120px"></audio> | <audio src="eval_timbre_2/x.mp3" controls style="width:  120px"></audio> | <audio src="eval_timbre_2/y.mp3" controls style="width:  120px"></audio> | <audio src="eval_timbre_2/y.mp3" controls style="width:  120px"></audio> |
+| | Source | Target | SS-VAE | Music Style Transfer | Ours no adv. | Ours |
+| :-:| :-: | :-:  |:-:  | :-: | :-: | :-: |
+| Piano 1|<audio src="eval_timbre_2/x.mp3" controls style="width:  100px"></audio> | <audio src="eval_timbre_2/x.mp3" controls style="width:  100px"></audio> | <audio src="eval_timbre_2/y.mp3" controls style="width:  100px"></audio> | <audio src="eval_timbre_2/x.mp3" controls style="width:  100px"></audio> | <audio src="eval_timbre_2/y.mp3" controls style="width:  100px"></audio> | <audio src="eval_timbre_2/y.mp3" controls style="width:  100px"></audio> |
+||| <audio src="eval_timbre_2/x.mp3" controls style="width:  100px"></audio> | <audio src="eval_timbre_2/y.mp3" controls style="width:  100px"></audio> | <audio src="eval_timbre_2/x.mp3" controls style="width:  100px"></audio> | <audio src="eval_timbre_2/y.mp3" controls style="width:  100px"></audio> | <audio src="eval_timbre_2/y.mp3" controls style="width:  100px"></audio> |
+||| <audio src="eval_timbre_2/x.mp3" controls style="width:  100px"></audio> |  <audio src="eval_timbre_2/y.mp3" controls style="width:  100px"></audio> | <audio src="eval_timbre_2/x.mp3" controls style="width:  100px"></audio> | <audio src="eval_timbre_2/y.mp3" controls style="width:  100px"></audio> | <audio src="eval_timbre_2/y.mp3" controls style="width:  100px"></audio> |
 
 
 
@@ -53,11 +45,11 @@ In this paper, we aim to unify explicit control and style transfer within a sing
 
 ## Real Data
 
-
-| Source | Target | <div style="width:60px"></div>| SS-VAE | Music Style Transfer | Ours no adv. | Ours |
-| :-: | :-:  |:-:  | :-: | :-: | :-: | :-: |
-  |<audio src="eval_timbre_2/x.mp3" controls style="width:  120px"></audio> | <audio src="eval_timbre_2/x.mp3" controls style="width:  120px"></audio> | | <audio src="eval_timbre_2/y.mp3" controls style="width:  120px"></audio> | <audio src="eval_timbre_2/x.mp3" controls style="width:  120px"></audio> | <audio src="eval_timbre_2/y.mp3" controls style="width:  120px"></audio> | <audio src="eval_timbre_2/y.mp3" controls style="width:  120px"></audio> |
-
+| | Source | Target | SS-VAE | Music Style Transfer | Ours no adv. | Ours |
+| :-:| :-: | :-:  |:-:  | :-: | :-: | :-: |
+| Piano 1|<audio src="eval_timbre_2/x.mp3" controls style="width:  100px"></audio> | <audio src="eval_timbre_2/x.mp3" controls style="width:  100px"></audio> | <audio src="eval_timbre_2/y.mp3" controls style="width:  100px"></audio> | <audio src="eval_timbre_2/x.mp3" controls style="width:  100px"></audio> | <audio src="eval_timbre_2/y.mp3" controls style="width:  100px"></audio> | <audio src="eval_timbre_2/y.mp3" controls style="width:  100px"></audio> |
+||| <audio src="eval_timbre_2/x.mp3" controls style="width:  100px"></audio> | <audio src="eval_timbre_2/y.mp3" controls style="width:  100px"></audio> | <audio src="eval_timbre_2/x.mp3" controls style="width:  100px"></audio> | <audio src="eval_timbre_2/y.mp3" controls style="width:  100px"></audio> | <audio src="eval_timbre_2/y.mp3" controls style="width:  100px"></audio> |
+||| <audio src="eval_timbre_2/x.mp3" controls style="width:  100px"></audio> |  <audio src="eval_timbre_2/y.mp3" controls style="width:  100px"></audio> | <audio src="eval_timbre_2/x.mp3" controls style="width:  100px"></audio> | <audio src="eval_timbre_2/y.mp3" controls style="width:  100px"></audio> | <audio src="eval_timbre_2/y.mp3" controls style="width:  100px"></audio> |
 
 
 
@@ -65,9 +57,9 @@ In this paper, we aim to unify explicit control and style transfer within a sing
   # Music style transfer
 
 
-  | Source | Target | <div style="width:60px"></div>| MusicGen | Ours no adv. | Ours |
-| :-: | :-:  |:-:  | :-: | :-: | :-: | 
-|<audio src="eval_timbre_2/x.mp3" controls style="width:  120px"></audio> | <audio src="eval_timbre_2/x.mp3" controls style="width:  120px"></audio> | | <audio src="eval_timbre_2/y.mp3" controls style="width:  120px"></audio> | <audio src="eval_timbre_2/x.mp3" controls style="width:  120px"></audio> | <audio src="eval_timbre_2/y.mp3" controls style="width:  120px"></audio> | 
-|<audio src="eval_timbre_2/x.mp3" controls style="width:  120px"></audio> | <audio src="eval_timbre_2/x.mp3" controls style="width:  120px"></audio> | | <audio src="eval_timbre_2/y.mp3" controls style="width:  120px"></audio> | <audio src="eval_timbre_2/x.mp3" controls style="width:  120px"></audio> | <audio src="eval_timbre_2/y.mp3" controls style="width:  120px"></audio> | 
-|<audio src="eval_timbre_2/x.mp3" controls style="width:  120px"></audio> | <audio src="eval_timbre_2/x.mp3" controls style="width:  120px"></audio> | | <audio src="eval_timbre_2/y.mp3" controls style="width:  120px"></audio> | <audio src="eval_timbre_2/x.mp3" controls style="width:  120px"></audio> | <audio src="eval_timbre_2/y.mp3" controls style="width:  120px"></audio> | 
+  | Source | Target | MusicGen | Ours no adv. | Ours |
+| :-: | :-:  |:-:  | :-: | :-: |
+|<audio src="eval_timbre_2/x.mp3" controls style="width:  100px"></audio> | <audio src="eval_timbre_2/x.mp3" controls style="width:  100px"></audio> |  <audio src="eval_timbre_2/y.mp3" controls style="width:  100px"></audio> | <audio src="eval_timbre_2/x.mp3" controls style="width:  100px"></audio> | <audio src="eval_timbre_2/y.mp3" controls style="width:  100px"></audio> | 
+|<audio src="eval_timbre_2/x.mp3" controls style="width:  100px"></audio> | <audio src="eval_timbre_2/x.mp3" controls style="width:  100px"></audio> |  <audio src="eval_timbre_2/y.mp3" controls style="width:  100px"></audio> | <audio src="eval_timbre_2/x.mp3" controls style="width:  100px"></audio> | <audio src="eval_timbre_2/y.mp3" controls style="width:  100px"></audio> | 
+|<audio src="eval_timbre_2/x.mp3" controls style="width:  100px"></audio> | <audio src="eval_timbre_2/x.mp3" controls style="width:  100px"></audio> |  <audio src="eval_timbre_2/y.mp3" controls style="width:  100px"></audio> | <audio src="eval_timbre_2/x.mp3" controls style="width:  100px"></audio> | <audio src="eval_timbre_2/y.mp3" controls style="width:  100px"></audio> | 
 
