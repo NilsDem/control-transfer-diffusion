@@ -14,8 +14,8 @@ In this paper, we aim to unify explicit control and style transfer within a sing
 
 | | MIDI | original | SpecDiff | Ours with encoder | Ours |
 | :-:| :-: | :-: | :-: | :-: | :-: |
-| Piano  | <img src="images/midi-to-audio/1.png" width="400" >  |<audio src="eval_timbre_2/x.mp3" controls style="width:  100px"></audio> | <audio src="eval_timbre_2/y.mp3" controls style="width:  100px"></audio> | <audio src="eval_timbre_2/x.mp3" controls style="width:  100px"></audio> | <audio src="eval_timbre_2/y.mp3" controls style="width:  100px"></audio> |
-| Piano  |  <img src="images/midi-to-audio/1.png" width="400" >  |<audio src="eval_timbre_2/x.mp3" controls style="width:  100px"></audio> | <audio src="eval_timbre_2/y.mp3" controls style="width:  100px"></audio> | <audio src="eval_timbre_2/x.mp3" controls style="width:  100px"></audio> | <audio src="eval_timbre_2/y.mp3" controls style="width:  100px"></audio> |
+| Piano  | <img src="images/midi-to-audio/1.png" controls style="width:  400px" >  |<audio src="eval_timbre_2/x.mp3" controls style="width:  100px"></audio> | <audio src="eval_timbre_2/y.mp3" controls style="width:  100px"></audio> | <audio src="eval_timbre_2/x.mp3" controls style="width:  100px"></audio> | <audio src="eval_timbre_2/y.mp3" controls style="width:  100px"></audio> |
+| Piano  |  <img src="images/midi-to-audio/1.png" controls style="width:  400" >  |<audio src="eval_timbre_2/x.mp3" controls style="width:  100px"></audio> | <audio src="eval_timbre_2/y.mp3" controls style="width:  100px"></audio> | <audio src="eval_timbre_2/x.mp3" controls style="width:  100px"></audio> | <audio src="eval_timbre_2/y.mp3" controls style="width:  100px"></audio> |
 
 
 ## Changing the target instrument
