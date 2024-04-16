@@ -12,18 +12,18 @@ In this paper, we aim to unify explicit control and style transfer within a sing
 ## Reconstruction
 
 
-| | | original | SpecDiff | Ours with encoder | Ours |
-| :-:| :-:  | :-: | :-: | :-: | :-: |
-| Piano  | <img src="images/midi-to-audio/1.png">  |<audio src="eval_timbre_2/x.mp3" controls style="width:  100px"></audio> | <audio src="eval_timbre_2/y.mp3" controls style="width:  100px"></audio> | <audio src="eval_timbre_2/x.mp3" controls style="width:  100px"></audio> | <audio src="eval_timbre_2/y.mp3" controls style="width:  100px"></audio> |
+| | MIDI | original | SpecDiff | Ours with encoder | Ours |
+| :-:| :-: | :-: | :-: | :-: | :-: |
+| Piano  | <img src="images/midi-to-audio/1.png" alt="drawing" controls style="width:  300px" >  |<audio src="eval_timbre_2/x.mp3" controls style="width:  100px"></audio> | <audio src="eval_timbre_2/y.mp3" controls style="width:  100px"></audio> | <audio src="eval_timbre_2/x.mp3" controls style="width:  100px"></audio> | <audio src="eval_timbre_2/y.mp3" controls style="width:  100px"></audio> |
 | Piano  | <img src="images/midi-to-audio/1.png">  |<audio src="eval_timbre_2/x.mp3" controls style="width:  100px"></audio> | <audio src="eval_timbre_2/y.mp3" controls style="width:  100px"></audio> | <audio src="eval_timbre_2/x.mp3" controls style="width:  100px"></audio> | <audio src="eval_timbre_2/y.mp3" controls style="width:  100px"></audio> |
 
 
 ## Changing the target instrument
 
 
-| | | original | SpecDiff | Ours with encoder | Ours |
+| | MIDI | original | SpecDiff | Ours with encoder | Ours |
 | :-:| :-:  | :-: | :-: | :-: | :-: |
-| Piano to guitar  |<img src="images/midi-to-audio/1.png">  |<audio src="eval_timbre_2/x.mp3" controls style="width:  100px"></audio> | <audio src="eval_timbre_2/y.mp3" controls style="width:  100px"></audio> | <audio src="eval_timbre_2/x.mp3" controls style="width:  100px"></audio> | <audio src="eval_timbre_2/y.mp3" controls style="width:  100px"></audio> |
+| Piano to guitar  | <img src="images/midi-to-audio/1.png" alt="drawing" controls style="width:  300px" >  | <audio src="eval_timbre_2/x.mp3" controls style="width:  100px"></audio> | <audio src="eval_timbre_2/y.mp3" controls style="width:  100px"></audio> | <audio src="eval_timbre_2/x.mp3" controls style="width:  100px"></audio> | <audio src="eval_timbre_2/y.mp3" controls style="width:  100px"></audio> |
 | Piano to guitar  |<img src="images/midi-to-audio/1.png">  |<audio src="eval_timbre_2/x.mp3" controls style="width:  100px"></audio> | <audio src="eval_timbre_2/y.mp3" controls style="width:  100px"></audio> | <audio src="eval_timbre_2/x.mp3" controls style="width:  100px"></audio> | <audio src="eval_timbre_2/y.mp3" controls style="width:  100px"></audio> |
 
 
@@ -54,7 +54,7 @@ In this paper, we aim to unify explicit control and style transfer within a sing
 
 
 
-  # Music style transfer
+# Music style transfer
 
 
   | Source | Target | MusicGen | Ours no adv. | Ours |
