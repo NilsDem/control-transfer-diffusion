@@ -12,7 +12,7 @@ In this paper, we aim to unify explicit control and style transfer within a sing
 ## Reconstruction
 
 
-| | <div style="width:290px"></div>  | original | midi synthesis | SpecDiff | Ours with encoder | Ours |
+| | <div style="width:290px"> midi </div>  | original | midi synthesis | SpecDiff | Ours with encoder | Ours |
 | :-:| :-:  | :-: | :-: | :-: | :-: | :-: |
 | Piano  | <img src="images/midi-to-audio/1.png" alt="drawing" controls style="width:  300px" >  |<audio src="eval_timbre_2/x.mp3" controls style="width:  120px"></audio> | <audio src="eval_timbre_2/y.mp3" controls style="width:  120px"></audio> | <audio src="eval_timbre_2/x.mp3" controls style="width:  120px"></audio> | <audio src="eval_timbre_2/y.mp3" controls style="width:  120px"></audio> | <audio src="eval_timbre_2/y.mp3" controls style="width:  120px"></audio> | <audio src="eval_timbre_2/y.mp3" controls style="width:  120px"></audio> | 
 | Violin  |  <img src="images/midi-to-audio/1.png" alt="drawing" controls style="width:  300px" >  | <audio src="eval_timbre_2/x.mp3" controls style="width:  120px"></audio> | <audio src="eval_timbre_2/y.mp3" controls style="width:  120px"></audio> | <audio src="eval_timbre_2/x.mp3" controls style="width:  120px"></audio> | <audio src="eval_timbre_2/y.mp3" controls style="width:  120px"></audio> | <audio src="eval_timbre_2/y.mp3" controls style="width:  120px"></audio> |
