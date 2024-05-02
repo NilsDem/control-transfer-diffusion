@@ -9,28 +9,146 @@ In this paper, we aim to unify explicit control and style transfer within a sing
 
 
 # MIDI-to-audio
+<table class="table table-sm text-center" style="vertical-align: middle;">
+  <thead>
+    <tr>
+      <th style="text-align:center;"></th>
+      <th style="text-align:center;">MIDI</th>
+      <th style="text-align:center;"></th>
+      <th style="text-align:center;">Target</th>
+      <th style="text-align:center;">SpecDiff</th>
+      <th style="text-align:center;">Ours with encoder</th>
+      <th style="text-align:center;">Ours</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td rowspan="2">Piano</td>
+      <td rowspan="2"><img src="audios/midi/midi/piano.png" height="100" width ="400" ></td>
+      <td>reconstruction</td>
+      <td><audio src="audios/midi/true/piano.wav" controls style="width: 200px"></audio></td>
+      <td><audio src="audios/midi/specdiff/piano.wav" controls style="width: 200px"></audio></td>
+      <td><audio src="audios/midi/ours/piano.wav" controls style="width: 200px"></audio></td>
+      <td><audio src="audios/midi/ours_enc/piano.wav" controls style="width: 200px"></audio></td>
+    </tr>
+      <tr>
+      <td>transfer</td>
+      <td><audio src="audios/midi/target/piano.wav" controls style="width: 200px"></audio></td>
+      <td><audio src="audios/midi/specdiff/piano_transfer.wav" controls style="width: 200px"></audio></td>
+      <td><audio src="audios/midi/ours/piano_transfer.wav" controls style="width: 200px"></audio></td>
+      <td><audio src="audios/midi/ours_enc/piano_transfer.wav" controls style="width: 200px"></audio></td>
+    </tr>
+    <!-- Add more rows as needed -->
+    <tr>
+      <td rowspan="2">Guitar</td>
+      <td rowspan="2"><img src="audios/midi/midi/guitar.png" height="100" width ="400" ></td>
+      <td>reconstruction</td>
+      <td><audio src="audios/midi/true/guitar.wav" controls style="width: 200px"></audio></td>
+      <td><audio src="audios/midi/specdiff/guitar.wav" controls style="width: 200px"></audio></td>
+      <td><audio src="audios/midi/ours/guitar.wav" controls style="width: 200px"></audio></td>
+      <td><audio src="audios/midi/ours_enc/guitar.wav" controls style="width: 200px"></audio></td>
+    </tr>
+      <tr>
+      <td>transfer</td>
+      <td><audio src="audios/midi/target/guitar.wav" controls style="width: 200px"></audio></td>
+      <td><audio src="audios/midi/specdiff/guitar_transfer.wav" controls style="width: 200px"></audio></td>
+      <td><audio src="audios/midi/ours/guitar_transfer.wav" controls style="width: 200px"></audio></td>
+      <td><audio src="audios/midi/ours_enc/guitar_transfer.wav" controls style="width: 200px"></audio></td>
+    </tr>
+        <!-- Add more rows as needed -->
+    <tr>
+      <td rowspan="2">Strings</td>
+      <td rowspan="2"><img src="audios/midi/midi/strings.png" height="100" width ="400" ></td>
+      <td>reconstruction</td>
+      <td><audio src="audios/midi/true/strings.wav" controls style="width: 200px"></audio></td>
+      <td><audio src="audios/midi/specdiff/strings.wav" controls style="width: 200px"></audio></td>
+      <td><audio src="audios/midi/ours/strings.wav" controls style="width: 200px"></audio></td>
+      <td><audio src="audios/midi/ours_enc/strings.wav" controls style="width: 200px"></audio></td>
+    </tr>
+      <tr>
+      <td>transfer</td>
+      <td><audio src="audios/midi/target/strings.wav" controls style="width: 200px"></audio></td>
+      <td><audio src="audios/midi/specdiff/strings_transfer.wav" controls style="width: 200px"></audio></td>
+      <td><audio src="audios/midi/ours/strings_transfer.wav" controls style="width: 200px"></audio></td>
+      <td><audio src="audios/midi/ours_enc/strings_transfer.wav" controls style="width: 200px"></audio></td>
+    </tr>
+        <!-- Add more rows as needed -->
+    <tr>
+      <td rowspan="2">Voice</td>
+      <td rowspan="2"><img src="audios/midi/midi/voice.png" height="100" width ="400" ></td>
+      <td>reconstruction</td>
+      <td><audio src="audios/midi/true/voice.wav" controls style="width: 200px"></audio></td>
+      <td><audio src="audios/midi/specdiff/voice.wav" controls style="width: 200px"></audio></td>
+      <td><audio src="audios/midi/ours/voice.wav" controls style="width: 200px"></audio></td>
+      <td><audio src="audios/midi/ours_enc/voice.wav" controls style="width: 200px"></audio></td>
+    </tr>
+      <tr>
+      <td>transfer</td>
+      <td><audio src="audios/midi/target/voice.wav" controls style="width: 200px"></audio></td>
+      <td><audio src="audios/midi/specdiff/voice_transfer.wav" controls style="width: 200px"></audio></td>
+      <td><audio src="audios/midi/ours/voice_transfer.wav" controls style="width: 200px"></audio></td>
+      <td><audio src="audios/midi/ours_enc/voice_transfer.wav" controls style="width: 200px"></audio></td>
+    </tr>
+            <!-- Add more rows as needed -->
+    <tr>
+      <td rowspan="2">Synth</td>
+      <td rowspan="2"><img src="audios/midi/midi/synth.png" height="100" width ="400" ></td>
+      <td>reconstruction</td>
+      <td><audio src="audios/midi/true/chelou.wav" controls style="width: 200px"></audio></td>
+      <td><audio src="audios/midi/specdiff/chelou.wav" controls style="width: 200px"></audio></td>
+      <td><audio src="audios/midi/ours/chelou.wav" controls style="width: 200px"></audio></td>
+      <td><audio src="audios/midi/ours_enc/chelou.wav" controls style="width: 200px"></audio></td>
+    </tr>
+      <tr>
+      <td>transfer</td>
+      <td><audio src="audios/midi/target/chelou.wav" controls style="width: 200px"></audio></td>
+      <td><audio src="audios/midi/specdiff/chelou_transfer.wav" controls style="width: 200px"></audio></td>
+      <td><audio src="audios/midi/ours/chelou_transfer.wav" controls style="width: 200px"></audio></td>
+      <td><audio src="audios/midi/ours_enc/chelou_transfer.wav" controls style="width: 200px"></audio></td>
+    </tr>
+              <!-- Add more rows as needed -->
+    <tr>
+      <td rowspan="2">Bass</td>
+      <td rowspan="2"><img src="audios/midi/midi/bass.png" height="100" width ="400" ></td>
+      <td>reconstruction</td>
+      <td><audio src="audios/midi/true/bass.wav" controls style="width: 200px"></audio></td>
+      <td><audio src="audios/midi/specdiff/bass.wav" controls style="width: 200px"></audio></td>
+      <td><audio src="audios/midi/ours/bass.wav" controls style="width: 200px"></audio></td>
+      <td><audio src="audios/midi/ours_enc/bass.wav" controls style="width: 200px"></audio></td>
+    </tr>
+      <tr>
+      <td>transfer</td>
+      <td><audio src="audios/midi/target/bass.wav" controls style="width: 200px"></audio></td>
+      <td><audio src="audios/midi/specdiff/bass_transfer.wav" controls style="width: 200px"></audio></td>
+      <td><audio src="audios/midi/ours/bass_transfer.wav" controls style="width: 200px"></audio></td>
+      <td><audio src="audios/midi/ours_enc/bass_transfer.wav" controls style="width: 200px"></audio></td>
+    </tr>
+                <!-- Add more rows as needed -->
+    <tr>
+      <td rowspan="2">Flute</td>
+      <td rowspan="2"><img src="audios/midi/midi/flute.png" height="100" width ="400" ></td>
+      <td>reconstruction</td>
+      <td><audio src="audios/midi/true/flute.wav" controls style="width: 200px"></audio></td>
+      <td><audio src="audios/midi/specdiff/flute.wav" controls style="width: 200px"></audio></td>
+      <td><audio src="audios/midi/ours/flute.wav" controls style="width: 200px"></audio></td>
+      <td><audio src="audios/midi/ours_enc/flute.wav" controls style="width: 200px"></audio></td>
+    </tr>
+      <tr>
+      <td>transfer</td>
+      <td><audio src="audios/midi/target/flute.wav" controls style="width: 200px"></audio></td>
+      <td><audio src="audios/midi/specdiff/flute_transfer.wav" controls style="width: 200px"></audio></td>
+      <td><audio src="audios/midi/ours/flute_transfer.wav" controls style="width: 200px"></audio></td>
+      <td><audio src="audios/midi/ours_enc/flute_transfer.wav" controls style="width: 200px"></audio></td>
+    </tr>
+  </tbody>
+</table> 
 
-
-| | MIDI | | Target | SpecDiff | Ours with encoder | Ours |
-| :-:| :-------------------------------------: | :-: | :-: | :-: | :-: | :-: |
-| Piano   | <img src="audios/midi/midi/piano.png" width="300"  >  | reconstruction | <audio src="audios/midi/true/piano.wav" controls style="width:  200px"></audio> | <audio src="audios/midi/specdiff/piano.wav" controls style="width:  200px"></audio> | <audio src="audios/midi/ours/piano.wav" controls style="width:  200px"></audio> | <audio src="audios/midi/ours_enc/piano.wav" controls style="width:  200px"></audio> |
-|   | | transfer | <audio src="audios/midi/target/piano.wav" controls style="width:  200px"></audio>  |  <audio src="audios/midi/specdiff/piano_transfer.wav" controls style="width:  200px"></audio> | <audio src="audios/midi/ours/piano_transfer.wav" controls style="width:  200px"></audio> | <audio src="audios/midi/ours_enc/piano_transfer.wav" controls style="width:  200px"></audio> |
-| Guitar  | <img src="audios/midi/midi/guitar.png" controls style="width:  400" > | reconstruction |<audio src="audios/midi/true/guitar.wav" controls style="width:  200px"></audio> | <audio src="audios/midi/specdiff/guitar.wav" controls style="width:  200px"></audio> | <audio src="audios/midi/ours/guitar.wav" controls style="width:  200px"></audio> | <audio src="audios/midi/ours_enc/guitar.wav" controls style="width:  200px"></audio> |
-|  | | transfer | <audio src="audios/midi/target/guitar.wav" controls style="width:  200px"></audio> | <audio src="audios/midi/specdiff/guitar_transfer.wav" controls style="width:  200px"></audio> | <audio src="audios/midi/ours/guitar_transfer.wav" controls style="width:  200px"></audio> | <audio src="audios/midi/ours_enc/guitar_transfer.wav" controls style="width:  200px"></audio> |
-| Strings  | <img src="audios/midi/midi/strings.png" controls style="width:  400" > | reconstruction  |<audio src="audios/midi/true/strings.wav" controls style="width:  200px"></audio> | <audio src="audios/midi/specdiff/strings.wav" controls style="width:  200px"></audio> | <audio src="audios/midi/ours/strings.wav" controls style="width:  200px"></audio> | <audio src="audios/midi/ours_enc/strings.wav" controls style="width:  200px"></audio> |
-|  | | transfer | <audio src="audios/midi/target/strings.wav" controls style="width:  200px"></audio>  | <audio src="audios/midi/specdiff/strings_transfer.wav" controls style="width:  200px"></audio> | <audio src="audios/midi/ours/strings_transfer.wav" controls style="width:  200px"></audio> | <audio src="audios/midi/ours_enc/strings_transfer.wav" controls style="width:  200px"></audio> |
-| Voice  | <img src="audios/midi/midi/voice.png" controls style="width:  400" > | reconstruction  |<audio src="audios/midi/true/voice.wav" controls style="width:  200px"></audio> | <audio src="audios/midi/specdiff/voice.wav" controls style="width:  200px"></audio> | <audio src="audios/midi/ours/voice.wav" controls style="width:  200px"></audio> | <audio src="audios/midi/ours_enc/voice.wav" controls style="width:  200px"></audio> |
-|  | | transfer | <audio src="audios/midi/target/voice.wav" controls style="width:  200px"></audio> | <audio src="audios/midi/specdiff/voice_transfer.wav" controls style="width:  200px"></audio> | <audio src="audios/midi/ours/voice_transfer.wav" controls style="width:  200px"></audio> | <audio src="audios/midi/ours_enc/voice_transfer.wav" controls style="width:  200px"></audio> |
-| Synth  | <img src="audios/midi/midi/synth.png" controls style="width:  400" > | reconstruction  |<audio src="audios/midi/true/chelou.wav" controls style="width:  200px"></audio> | <audio src="audios/midi/specdiff/chelou.wav" controls style="width:  200px"></audio> | <audio src="audios/midi/ours/chelou.wav" controls style="width:  200px"></audio> | <audio src="audios/midi/ours_enc/chelou.wav" controls style="width:  200px"></audio> |
-|  | | transfer | <audio src="audios/midi/target/chelou.wav" controls style="width:  200px"></audio> | <audio src="audios/midi/specdiff/chelou_transfer.wav" controls style="width:  200px"></audio> | <audio src="audios/midi/ours/chelou_transfer.wav" controls style="width:  200px"></audio> | <audio src="audios/midi/ours_enc/chelou_transfer.wav" controls style="width:  200px"></audio> |
-| Bass  | <img src="audios/midi/midi/bass.png" controls style="width:  400" > | reconstruction  |<audio src="audios/midi/true/bass.wav" controls style="width:  200px"></audio> | <audio src="audios/midi/specdiff/bass.wav" controls style="width:  200px"></audio> | <audio src="audios/midi/ours/bass.wav" controls style="width:  200px"></audio> | <audio src="audios/midi/ours_enc/bass.wav" controls style="width:  200px"></audio> |
-|  | | transfer | <audio src="audios/midi/target/bass.wav" controls style="width:  200px"></audio>  | <audio src="audios/midi/specdiff/bass_transfer.wav" controls style="width:  200px"></audio> | <audio src="audios/midi/ours/bass_transfer.wav" controls style="width:  200px"></audio> | <audio src="audios/midi/ours_enc/bass_transfer.wav" controls style="width:  200px"></audio> |
-| Flute  | <img src="audios/midi/midi/flute.png" controls style="width:  400" > | reconstruction   |<audio src="audios/midi/true/flute.wav" controls style="width:  200px"></audio> | <audio src="audios/midi/specdiff/flute.wav" controls style="width:  200px"></audio> | <audio src="audios/midi/ours/flute.wav" controls style="width:  200px"></audio> | <audio src="audios/midi/ours_enc/flute.wav" controls style="width:  200px"></audio> |
-|  | | transfer | <audio src="audios/midi/target/flute.wav" controls style="width:  200px"></audio>  | <audio src="audios/midi/specdiff/flute_transfer.wav" controls style="width:  200px"></audio> | <audio src="audios/midi/ours/flute_transfer.wav" controls style="width:  200px"></audio> | <audio src="audios/midi/ours_enc/flute_transfer.wav" controls style="width:  200px"></audio> |
 
 
 # Timbre Transfer
 ## Synthetic Data
+
+
 
 
 | | Source | Target | SS-VAE | Music Style Transfer | Ours no adv. | Ours |
