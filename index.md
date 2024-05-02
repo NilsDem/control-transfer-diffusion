@@ -1,6 +1,6 @@
 <div style="text-align: center"> 
 
-# Combining audio control and style transfer using latent diffusion 
+<h1>Combining audio control and style transfer using latent diffusion </h1>
 </div>
 
 <div style="text-align: justify"> 
@@ -18,7 +18,7 @@ In this paper, we aim to unify explicit control and style transfer within a sing
 
 # MIDI-to-audio
 
-Examples in MIDI-to-audio generation on the [Slakh dataset](http://www.slakh.com/) . For each midi file, we present results in reconstruction (using the original audio associated with the midi file) and transfer to a different recording timbre. For the baseline SpecDiff (Multi-instrument music synthesis with spectrogram diffusion [^1]), we swap the MIDI instrument program to the one of the target timbre sample. 
+Examples in MIDI-to-audio generation on the [Slakh dataset](http://www.slakh.com/) . For each midi file, we present results in reconstruction (using the original audio associated with the midi file) and transfer to a different recording timbre. For the baseline SpecDiff (Multi-instrument music synthesis with spectrogram diffusion[^1]), we swap the MIDI instrument program to the one of the target timbre sample. 
 
 <table class="table table-sm text-center" style="vertical-align: middle;">
   <colgroup>
