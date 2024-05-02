@@ -23,7 +23,7 @@ In this paper, we aim to unify explicit control and style transfer within a sing
   <thead>
     <tr>
       <th style="text-align:center;"></th>
-      <th style="text-align:center"><div style="width:300px">MIDI</div>   </th>
+      <th style="text-align:center"><span style="display: inline-block; width:300px">MIDI</span> </th>
       <th style="text-align:center;"></th>
       <th style="text-align:center;">Target</th>
       <th style="text-align:center;">SpecDiff</th>
