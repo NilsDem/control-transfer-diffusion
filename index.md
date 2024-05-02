@@ -24,7 +24,7 @@ In this paper, we aim to unify explicit control and style transfer within a sing
   <tbody>
     <tr>
       <td rowspan="2">Piano</td>
-      <td rowspan="2"><img src="audios/midi/midi/piano.png" height="120" width ="400" ></td>
+      <td rowspan="2"><img src="audios/midi/midi/piano.png" controls style="width: 300px"></td>
       <td>reconstruction</td>
       <td><audio src="audios/midi/true/piano.wav" controls style="width: 200px"></audio></td>
       <td><audio src="audios/midi/specdiff/piano.wav" controls style="width: 200px"></audio></td>
