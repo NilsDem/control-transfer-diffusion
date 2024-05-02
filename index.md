@@ -4,8 +4,9 @@
 **Abstract**
 Deep generative models are now able to synthesize high-quality audio signals, shifting the critical aspect in their development from audio quality to control capabilities. Although text-to-music generation is getting largely adopted by the general public, explicit control and example-based style transfer are more adequate modalities to capture the intents of artists and musicians. 
 In this paper, we aim to unify explicit control and style transfer within a single model by separating local and global information to capture musical structure and timbre respectively. To do so, we leverage the capabilities of diffusion autoencoders to extract semantic features, in order to build two representation spaces. We enforce disentanglement between those spaces using an adversarial criterion and a two-stage training strategy. Our resulting model can generate audio matching a timbre target, while specifying structure either with explicit controls or through another audio example. We evaluate our model on one-shot timbre transfer and MIDI-to-audio tasks on instrumental recordings and show that we outperform existing baselines in terms of audio quality and target fidelity. Furthermore, we show that our method can generate cover versions of complete musical pieces by transferring rhythmic and melodic content to the style of a target audio in a different genre. 
-
+<p align="center">
 <img src="images/method.png">
+</p>
 
 
 # MIDI-to-audio
@@ -22,7 +23,7 @@ In this paper, we aim to unify explicit control and style transfer within a sing
   <thead>
     <tr>
       <th style="text-align:center;"></th>
-      <th style="text-align:center"> MIDI </th>
+      <th style="text-align:center"><div style="width:300px">MIDI</div>   </th>
       <th style="text-align:center;"></th>
       <th style="text-align:center;">Target</th>
       <th style="text-align:center;">SpecDiff</th>
@@ -33,7 +34,7 @@ In this paper, we aim to unify explicit control and style transfer within a sing
   <tbody>
     <tr>
       <td rowspan="2">Piano</td>
-      <td rowspan="2"><img src="audios/midi/midi/piano.png" controls style="width: 400px; height: 100px"></td>
+      <td rowspan="2"><img src="audios/midi/midi/piano.png" controls style="width: 300px; height: 100px"></td>
       <td>reconstruction</td>
       <td><audio src="audios/midi/true/piano.wav" controls style="width: 200px"></audio></td>
       <td><audio src="audios/midi/specdiff/piano.wav" controls style="width: 200px"></audio></td>
@@ -50,7 +51,7 @@ In this paper, we aim to unify explicit control and style transfer within a sing
     <!-- Add more rows as needed -->
     <tr>
       <td rowspan="2">Guitar</td>
-      <td rowspan="2"><img src="audios/midi/midi/guitar.png" height="120" width ="400" ></td>
+      <td rowspan="2"><img src="audios/midi/midi/guitar.png" height="120" width ="300" ></td>
       <td>reconstruction</td>
       <td><audio src="audios/midi/true/guitar.wav" controls style="width: 200px"></audio></td>
       <td><audio src="audios/midi/specdiff/guitar.wav" controls style="width: 200px"></audio></td>
@@ -67,7 +68,7 @@ In this paper, we aim to unify explicit control and style transfer within a sing
         <!-- Add more rows as needed -->
     <tr>
       <td rowspan="2">Strings</td>
-      <td rowspan="2"><img src="audios/midi/midi/strings.png" height="120" width ="400" ></td>
+      <td rowspan="2"><img src="audios/midi/midi/strings.png" height="120" width ="300" ></td>
       <td>reconstruction</td>
       <td><audio src="audios/midi/true/strings.wav" controls style="width: 200px"></audio></td>
       <td><audio src="audios/midi/specdiff/strings.wav" controls style="width: 200px"></audio></td>
@@ -84,7 +85,7 @@ In this paper, we aim to unify explicit control and style transfer within a sing
         <!-- Add more rows as needed -->
     <tr>
       <td rowspan="2">Voice</td>
-      <td rowspan="2"><img src="audios/midi/midi/voice.png" height="120" width ="400" ></td>
+      <td rowspan="2"><img src="audios/midi/midi/voice.png" height="120" width ="300" ></td>
       <td>reconstruction</td>
       <td><audio src="audios/midi/true/voice.wav" controls style="width: 200px"></audio></td>
       <td><audio src="audios/midi/specdiff/voice.wav" controls style="width: 200px"></audio></td>
@@ -101,7 +102,7 @@ In this paper, we aim to unify explicit control and style transfer within a sing
             <!-- Add more rows as needed -->
     <tr>
       <td rowspan="2">Synth</td>
-      <td rowspan="2"><img src="audios/midi/midi/synth.png" height="120" width ="400" ></td>
+      <td rowspan="2"><img src="audios/midi/midi/synth.png" height="120" width ="300" ></td>
       <td>reconstruction</td>
       <td><audio src="audios/midi/true/chelou.wav" controls style="width: 200px"></audio></td>
       <td><audio src="audios/midi/specdiff/chelou.wav" controls style="width: 200px"></audio></td>
@@ -118,7 +119,7 @@ In this paper, we aim to unify explicit control and style transfer within a sing
               <!-- Add more rows as needed -->
     <tr>
       <td rowspan="2">Bass</td>
-      <td rowspan="2"><img src="audios/midi/midi/bass.png" height="120" width ="400" ></td>
+      <td rowspan="2"><img src="audios/midi/midi/bass.png" height="120" width ="300" ></td>
       <td>reconstruction</td>
       <td><audio src="audios/midi/true/bass.wav" controls style="width: 200px"></audio></td>
       <td><audio src="audios/midi/specdiff/bass.wav" controls style="width: 200px"></audio></td>
@@ -135,7 +136,7 @@ In this paper, we aim to unify explicit control and style transfer within a sing
                 <!-- Add more rows as needed -->
     <tr>
       <td rowspan="2">Flute</td>
-      <td rowspan="2"><img src="audios/midi/midi/flute.png" height="120" width ="400" ></td>
+      <td rowspan="2"><img src="audios/midi/midi/flute.png" height="120" width ="300" ></td>
       <td>reconstruction</td>
       <td><audio src="audios/midi/true/flute.wav" controls style="width: 200px"></audio></td>
       <td><audio src="audios/midi/specdiff/flute.wav" controls style="width: 200px"></audio></td>
