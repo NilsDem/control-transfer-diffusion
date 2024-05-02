@@ -10,10 +10,19 @@ In this paper, we aim to unify explicit control and style transfer within a sing
 
 # MIDI-to-audio
 <table class="table table-sm text-center" style="vertical-align: middle;">
+  <colgroup>
+      <col style="width: 200px;">
+      <col style="width: 600px;">
+      <col style="width: 200px;">
+      <col style="width: 200px;">
+      <col style="width: 200px;">
+      <col style="width: 200px;">
+      <col style="width: 200px;">
+    </colgroup>
   <thead>
     <tr>
       <th style="text-align:center;"></th>
-      <th style="text-align:center;width: 300px;">MIDI</th>
+      <th style="text-align:center"> MIDI </th>
       <th style="text-align:center;"></th>
       <th style="text-align:center;">Target</th>
       <th style="text-align:center;">SpecDiff</th>
@@ -24,7 +33,7 @@ In this paper, we aim to unify explicit control and style transfer within a sing
   <tbody>
     <tr>
       <td rowspan="2">Piano</td>
-      <td rowspan="2"><img src="audios/midi/midi/piano.png" controls style="width: 300px"></td>
+      <td rowspan="2"><img src="audios/midi/midi/piano.png" controls style="width: 400px; height: 100px"></td>
       <td>reconstruction</td>
       <td><audio src="audios/midi/true/piano.wav" controls style="width: 200px"></audio></td>
       <td><audio src="audios/midi/specdiff/piano.wav" controls style="width: 200px"></audio></td>
