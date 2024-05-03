@@ -1,7 +1,7 @@
 <div style="text-align: center"> 
 
 <h1>Combining audio control and style transfer using latent diffusion </h1>
-Supporting webpage for ISMIR 2024 paper submission
+Supporting webpage for ISMIR 2024 submission
 </div>
 
 
@@ -203,16 +203,24 @@ Examples in timbre transfer on three real instrumental recordings datasets.
 
 # Music style transfer
 
-TBA 
-<!---
+Examples in musical style transfer between recordings of rock, jazz, dub and lofi hip-hop. For music gen, we use the source audio as melody input and the following prompts : 
+- Jazz : 'In the style of a jazz song'
+- Rock : 'In the style of instrumental rock'
+- Dub : 'In the style of dub reggae music'
+- Lofi : 'In the style of lofi hip hop'
 
-  | Source | Target | MusicGen | Ours no adv. | Ours |
+
+| Source | Target | MusicGen | Ours no adv. | Ours |
 | :-: | :-:  |:-:  | :-: | :-: |
-|<audio src="eval_timbre_2/x.mp3" controls style="width:  200px"></audio> | <audio src="eval_timbre_2/x.mp3" controls style="width:  200px"></audio> |  <audio src="eval_timbre_2/y.mp3" controls style="width:  200px"></audio> | <audio src="eval_timbre_2/x.mp3" controls style="width:  200px"></audio> | <audio src="eval_timbre_2/y.mp3" controls style="width:  200px"></audio> | 
-|<audio src="eval_timbre_2/x.mp3" controls style="width:  200px"></audio> | <audio src="eval_timbre_2/x.mp3" controls style="width:  200px"></audio> |  <audio src="eval_timbre_2/y.mp3" controls style="width:  200px"></audio> | <audio src="eval_timbre_2/x.mp3" controls style="width:  200px"></audio> | <audio src="eval_timbre_2/y.mp3" controls style="width:  200px"></audio> | 
-|<audio src="eval_timbre_2/x.mp3" controls style="width:  200px"></audio> | <audio src="eval_timbre_2/x.mp3" controls style="width:  200px"></audio> |  <audio src="eval_timbre_2/y.mp3" controls style="width:  200px"></audio> | <audio src="eval_timbre_2/x.mp3" controls style="width:  200px"></audio> | <audio src="eval_timbre_2/y.mp3" controls style="width:  200px"></audio> | 
+|<audio src="audios/music/true/dub0.wav" controls style="width:  200px"></audio> | <audio src="audios/music/true/dub0_jazz.wav" controls style="width:  200px"></audio> |  <audio src="audios/music/musicgen/dub0.wav" controls style="width:  200px"></audio> | <audio src="audios/music/bottleneck/dub0.wav"  controls style="width:  200px"></audio> | <audio src="audios/music/true/dub0_jazz_out.wav" controls style="width:  200px"></audio> | 
+|<audio src="audios/music/true/dub1.wav" controls style="width:  200px"></audio> | <audio src="audios/music/true/dub1_jazz1.wav" controls style="width:  200px"></audio> |  <audio src="audios/music/musicgen/dub1.wav" controls style="width:  200px"></audio> | <audio src="audios/music/bottleneck/dub1.wav"  controls style="width:  200px"></audio> | <audio src="audios/music/true/dub1_jazz1_out.wav" controls style="width:  200px"></audio> | 
+|<audio src="audios/music/true/dub2.wav" controls style="width:  200px"></audio> | <audio src="audios/music/true/dub2_rock.wav" controls style="width:  200px"></audio> |  <audio src="audios/music/musicgen/dub2.wav" controls style="width:  200px"></audio> | <audio src="audios/music/bottleneck/dub2.wav"  controls style="width:  200px"></audio> | <audio src="audios/music/true/dub2_rock_out.wav" controls style="width:  200px"></audio> | 
+|<audio src="audios/music/true/jazz.wav" controls style="width:  200px"></audio> | <audio src="audios/music/true/jazz_rock.wav" controls style="width:  200px"></audio> |  <audio src="audios/music/musicgen/jazz.wav" controls style="width:  200px"></audio> | <audio src="audios/music/bottleneck/jazz.wav"  controls style="width:  200px"></audio> | <audio src="audios/music/true/jazz_rock_out.wav" controls style="width:  200px"></audio> |
+|<audio src="audios/music/true/jazz2.wav" controls style="width:  200px"></audio> | <audio src="audios/music/true/jazz2_lofi.wav" controls style="width:  200px"></audio> |  <audio src="audios/music/musicgen/jazz2.wav" controls style="width:  200px"></audio> | <audio src="audios/music/bottleneck/jazz2.wav"  controls style="width:  200px"></audio> | <audio src="audios/music/true/jazz2_lofi_out.wav" controls style="width:  200px"></audio> | 
+|<audio src="audios/music/true/rock1.wav" controls style="width:  200px"></audio> | <audio src="audios/music/true/rock1_dub.wav" controls style="width:  200px"></audio> |  <audio src="audios/music/musicgen/rock1.wav" controls style="width:  200px"></audio> | <audio src="audios/music/bottleneck/rock1.wav"  controls style="width:  200px"></audio> | <audio src="audios/music/true/rock1_dub_out.wav" controls style="width:  200px"></audio> | 
 
---->
+
+
 
 
 ## References 
