@@ -2,7 +2,7 @@
 
 <h1>Combining audio control and style transfer using latent diffusion </h1>
 Supporting webpage for ISMIR 2024.
-Code is available [here](https://github.com/NilsDem/control-transfer-diffusion/)
+Code is available <a href="https://github.com/NilsDem/control-transfer-diffusion/">here</a>
 </div>
 
 
