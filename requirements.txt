@@ -1,0 +1,9 @@
+torch
+torchaudio
+lmdb
+tqdm>=4.64.1
+tensorboard
+numpy>=1.26
+gin-config
+pretty_midi
+cached-conv>=2.5.0

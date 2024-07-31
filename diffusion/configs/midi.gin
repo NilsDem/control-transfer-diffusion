@@ -1,0 +1,103 @@
+from __gin__ import dynamic_registration
+
+
+
+from diffusion import networks 
+from diffusion import utils
+from diffusion import model
+
+
+# Model 
+Z_LENGTH = 256
+X_LENGTH = 131072
+AE_EMBSIZE = 32
+AE_FACTOR = 512
+SR = 44100
+ZT_CHANNELS = 32
+ZS_CHANNELS = 16
+N_MELS = 128
+
+
+# Training options
+WARMUP_STRUCTURE = 150000
+WARMUP_TIMBRE = 100000
+ADV_WEIGHT = 0.5
+GUIDANCE_DROP = 0.2
+LR = 1e-4
+
+
+
+### ARCHITECTURE ### 
+networks.UNET1D:
+    in_size = %AE_EMBSIZE
+    channels = [256, 512, 1024, 1024]
+    ratios = [2, 2, 2, 2]
+    time_cond_in_channels = %ZS_CHANNELS
+    time_cond_channels = 128
+    z_channels = %ZT_CHANNELS
+    time_channels = 128
+    n_attn_layers = 1
+
+
+encoder_timbre/networks.Encoder1D:
+    in_size = %AE_EMBSIZE
+    channels = [128, 256, 256, 512, %ZT_CHANNELS]
+    ratios = [2, 2, 2, 2, 2]
+    use_tanh = True
+    average_out = True
+
+
+encoder_structure/networks.Encoder1D:
+    in_size = %N_MELS
+    channels = [128, 256, 256, 512, %ZS_CHANNELS]
+    ratios = [1, 1, 1, 1, 1]
+    use_tanh = True
+    average_out = False
+
+
+classifier/networks.Encoder1D:
+    in_size= %ZS_CHANNELS
+    channels= [32, 64, 128, 128, %ZT_CHANNELS]
+    ratios= [2, 2, 2, 2, 2]
+    use_tanh = True
+    average_out=True
+
+
+model.EDM_ADV:
+    sr = %SR
+    net=@networks.UNET1D()
+    encoder = @encoder_timbre/networks.Encoder1D()
+    encoder_time = @encoder_structure/networks.Encoder1D()
+    classifier = @classifier/networks.Encoder1D()
+    data_prep = "normal"
+    reg_classifier = %ADV_WEIGHT
+    warmup_classifier = %WARMUP_STRUCTURE
+    warmup_timbre = %WARMUP_TIMBRE        
+    time_transform = None
+    data_type = "audio"
+    drop_values = [-4.,-4.]
+    sdata = 0.3
+
+
+model.EDM_ADV.fit: 
+    max_steps = 1000000
+    steps_valid = 10000
+    steps_save = 50000
+    guidance = %GUIDANCE_DROP
+    train_encoder = True
+    train_encoder_time = True
+    use_ema = True
+
+
+model.EDM_ADV.get_scheduler:
+    scheduler_type = "linear"
+    warmup_steps = 500000
+    decay_steps = 500000
+    decay_max = 0.1
+    
+model.EDM_ADV.init_train.lr = %LR
+
+
+
+
+### TRAIN CONFIGURATION ###

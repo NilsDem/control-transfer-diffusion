@@ -1,0 +1,9 @@
+*pycache*
+**/*.ipynb_checkpoints
+*.ckpt
+*.ts
+*libtorch*
+**/runs
+samples
+pretrained
+*.pt
