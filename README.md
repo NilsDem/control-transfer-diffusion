@@ -1,6 +1,6 @@
 # Combining audio control and style transfer using latent diffusion
 
-Official repository for the paper "Combining audio control and style transfer using latent diffusion", accepted at ISMIR 2024.
+Official repository for  _Combining audio control and style transfer using latent diffusion_ by Nils Demerlé, Philippe Esling, Guillaume Doras and David Genova accepted at ISMIR 2024.
 
 Training the model requires three steps : processing the dataset, training an autoencoder, then training the diffusion model.
 
