@@ -1,4 +1,5 @@
 import gin
+
 gin.add_config_file_search_path('./diffusion/configs')
 
 import torch
@@ -32,6 +33,10 @@ def add_gin_extension(config_name: str) -> str:
     return config_name
 
 
+def normalize(array):
+    return (array - array.min()) / (array.max() - array.min())
+
+
 def main(args):
     gin.parse_config_files_and_bindings(
         map(add_gin_extension, args.config),
@@ -60,7 +65,9 @@ def main(args):
     if args.dataset_type == "waveform":
         dataset = SimpleDataset(path=args.db_path, keys=["waveform"])
         dataset, valset = torch.utils.data.random_split(
-            dataset, (len(dataset) - int(0.5*len(dataset)), int(0.5*len(dataset))))
+            dataset,
+            (len(dataset) - int(0.95 * len(dataset)), int(
+                0.95 * len(dataset))))
 
         x_length = gin.query_parameter("%X_LENGTH")
 
@@ -85,7 +92,9 @@ def main(args):
     elif args.dataset_type == "midi":
         dataset = SimpleDataset(path=args.db_path, keys=["waveform", "pr"])
         dataset, valset = torch.utils.data.random_split(
-            dataset, (len(dataset) - int(0.9*len(dataset)), int(0.9*len(dataset))))
+            dataset,
+            (len(dataset) - int(0.95 * len(dataset)), int(
+                0.95 * len(dataset))))
 
         x_length = gin.query_parameter("%X_LENGTH")
         ae_ratio = gin.query_parameter("%AE_FACTOR")
@@ -94,7 +103,9 @@ def main(args):
             x = np.stack([l["waveform"] for l in L])
             x = torch.from_numpy(x).float().reshape((x.shape[0], 1, -1))
 
-            pr = np.stack([l["pr"] for l in L])
+            pr = [l["pr"] for l in L]
+            pr = map(normalize, pr)
+            pr = np.stack(list(pr))
             pr = torch.from_numpy(pr).float()
 
             i0 = np.random.randint(0, pr.shape[-1] - x_length // ae_ratio,

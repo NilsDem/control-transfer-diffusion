@@ -13,7 +13,9 @@ from tqdm import tqdm
 
 
 class Dummy():
+
     def __getattr__(self, key):
+
         def dummy_func(*args, **kwargs):
             return None
 
@@ -32,8 +34,7 @@ class Trainer(nn.Module):
         max_steps: int = 1000000,
         discriminator=None,
         warmup_steps=0,
-        freeze_encoder_step = 1000000000,
-        rebuild_cache_steps = None,
+        freeze_encoder_step=1000000000,
     ):
 
         super().__init__()
@@ -50,7 +51,6 @@ class Trainer(nn.Module):
         self.warmup = False
         self.warmup_steps = warmup_steps
         self.freeze_encoder_step = freeze_encoder_step
-        self.rebuild_cache_steps = rebuild_cache_steps
         self.step = 0
         self.init_opt()
 
@@ -94,7 +94,10 @@ class Trainer(nn.Module):
         return names
 
     def init_opt(self, lr=1e-4):
-        self.opt = AdamW(list(self.model.encoder.parameters()) + list(self.model.decoder.parameters()), lr=lr, betas=(0.9, 0.999))
+        self.opt = AdamW(list(self.model.encoder.parameters()) +
+                         list(self.model.decoder.parameters()),
+                         lr=lr,
+                         betas=(0.9, 0.999))
         self.scheduler = torch.optim.lr_scheduler.ExponentialLR(self.opt,
                                                                 gamma=0.999996)
 
@@ -109,10 +112,10 @@ class Trainer(nn.Module):
         d = torch.load(path + "/checkpoint" + str(step) + ".pt")
         self.model.load_state_dict(d["model_state"])
         self.opt.load_state_dict(d["opt_state"])
-        
+
         self.discriminator.load_state_dict(d["dis_state"])
         self.opt_dis.load_state_dict(d["opt_dis_state"])
-        self.step = step + 1 
+        self.step = step + 1
 
     def training_step(self, x):
         self.train()
@@ -136,7 +139,7 @@ class Trainer(nn.Module):
                 features_real, features_fake)
 
             self.opt_dis.zero_grad()
-            loss_dis.backward(retain_graph=True)    
+            loss_dis.backward(retain_graph=True)
             torch.nn.utils.clip_grad_norm(self.discriminator.parameters(), 1.0)
             self.opt_dis.step()
             #self.scheduler_dis.step()
@@ -150,9 +153,7 @@ class Trainer(nn.Module):
                     z = z.detach()
             else:
                 z, x_multiband = self.model.encode(x, with_multi=True)
-            
-                
-                
+
             y, y_multiband = self.model.decode(z, with_multi=True)
             loss_ae, loss_out = self.compute_loss(x,
                                                   y,
@@ -193,7 +194,7 @@ class Trainer(nn.Module):
         self.eval()
         all_losses = {key: 0 for key in self.get_losses_names()}
         with torch.no_grad():
-            for i,x in enumerate(validloader):
+            for i, x in enumerate(validloader):
                 x = x.to(self.device)
                 z, x_multiband = self.model.encode(x, with_multi=True)
                 y, y_multiband = self.model.decode(z, with_multi=True)
@@ -207,8 +208,8 @@ class Trainer(nn.Module):
 
                 if get_losses == False:
                     break
-                
-                if i==50:
+
+                if i == 50:
                     break
 
             all_losses = {
@@ -229,13 +230,13 @@ class Trainer(nn.Module):
                 return all_losses, None
 
     def fit(self,
-            dataset,
             trainloader,
             validloader,
             tensorboard=None,
-            steps_display=20, device="cpu"):
-        
-        self.device = device 
+            steps_display=20,
+            device="cpu"):
+
+        self.device = device
         self = self.to(device)
 
         if tensorboard is not None:
@@ -250,8 +251,7 @@ class Trainer(nn.Module):
         while self.step < self.max_steps:
             for x in trainloader:
                 x = x.to(device)
-                if self.rebuild_cache_steps is not None and (self.step+1)%self.rebuild_cache_steps == 0:
-                    dataset.build_cache()
+
                 all_losses = self.training_step(x)
 
                 for k in all_losses:
@@ -269,17 +269,15 @@ class Trainer(nn.Module):
                                           all_losses_count[k],
                                           global_step=self.step)
                         all_losses_sum[k] = 0.
-                    
-                if (not (self.step) %
-                    (10000)):
+
+                if (not (self.step) % (10000)):
                     print("Validation Step")
 
                     if validloader is not None:
                         all_losses, audio = self.val_step(validloader,
                                                           get_audio=True)
-                        print("Validation Loss at step ",
-                                          self.step, " : ",
-                                          all_losses["total_loss"])
+                        print("Validation Loss at step ", self.step, " : ",
+                              all_losses["total_loss"])
                         if logger:
                             for k, v in all_losses.items():
                                 logger.add_scalar('Validation/' + k,
@@ -300,21 +298,16 @@ class Trainer(nn.Module):
                                          sample_rate=self.sr)
 
                     d = {
-                        "model_state":
-                        self.model.state_dict(),
-                        "opt_state":
-                        self.opt.state_dict(),
-                        "dis_state":
-                        self.discriminator.state_dict(),
-                        "opt_dis_state":
-                        self.opt_dis.state_dict()
+                        "model_state": self.model.state_dict(),
+                        "opt_state": self.opt.state_dict(),
+                        "dis_state": self.discriminator.state_dict(),
+                        "opt_dis_state": self.opt_dis.state_dict()
                     }
-                    
-                    if not (self.step%50000):
-                        torch.save(
-                            d,
-                            tensorboard + "/checkpoint" + str(self.step) + ".pt")
 
+                    if not (self.step % 50000):
+                        torch.save(
+                            d, tensorboard + "/checkpoint" + str(self.step) +
+                            ".pt")
 
                 if self.step > self.max_steps + 1000:
                     exit()
@@ -322,5 +315,5 @@ class Trainer(nn.Module):
                 if self.step > self.warmup_steps and self.warmup == False:
                     self.warmup = True
                     print("Warmup finished")
-                    
+
                 self.step += 1

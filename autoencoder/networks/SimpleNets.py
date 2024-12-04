@@ -18,7 +18,6 @@ import numpy as np
 
 import cached_conv as cc
 
-
 #from .utils import closest_power_2, default, exists, groupby, prefix_dict, prod, to_list
 """
 Convolutional Modules
@@ -49,7 +48,8 @@ def Downsample1d(in_channels: int,
             out_channels=out_channels,
             kernel_size=factor * kernel_multiplier,
             stride=factor,
-            padding=cc.get_padding(2 * factor + 1, factor), #math.ceil(factor / 2),
+            padding=cc.get_padding(2 * factor,
+                                   factor),  #math.ceil(factor / 2),
         ))
 
 
@@ -308,12 +308,13 @@ class Encoder1d(nn.Module):
         self.to_out = nn.Sequential(
             activation(dim=channels * multipliers[-1]),
             normalization(
-                cc.Conv1d(in_channels=channels * multipliers[-1],
-                          out_channels=out_channels,
-                          kernel_size=3,
-                          padding=cc.get_padding(kernel_size=3, dilation=1),
-                          #padding="same"
-                           )))
+                cc.Conv1d(
+                    in_channels=channels * multipliers[-1],
+                    out_channels=out_channels,
+                    kernel_size=3,
+                    padding=cc.get_padding(kernel_size=3, dilation=1),
+                    #padding="same"
+                )))
 
     def forward(self, x: Tensor, with_info: bool = False) -> Tensor:
         x = self.to_in(x)
@@ -361,7 +362,7 @@ class Decoder1d(nn.Module):
                    kernel_size=kernel_size,
                    padding=cc.get_padding(kernel_size, dilation=1)
                    #padding="same"
-                    ))
+                   ))
 
         self.upsamples = nn.ModuleList([
             UpsampleBlock1d(in_channels=channels * multipliers[i],
@@ -382,10 +383,14 @@ class Decoder1d(nn.Module):
                                     activation=activation,
                                     use_norm=use_norm,
                                     kernel_size=kernel_size)
-        
+
         if self.use_noise:
-            self.noise_module = NoiseGeneratorV2(in_size = channels * multipliers[-1], hidden_size = 128, data_size = out_channels, ratios = [2,2,2], noise_bands = 5)
-            
+            self.noise_module = NoiseGeneratorV2(in_size=channels *
+                                                 multipliers[-1],
+                                                 hidden_size=128,
+                                                 data_size=out_channels,
+                                                 ratios=[2, 2, 2],
+                                                 noise_bands=5)
 
         self.recurrent_layer = recurent_layer(in_size=in_channels,
                                               out_size=in_channels)
@@ -397,7 +402,6 @@ class Decoder1d(nn.Module):
         for upsample in self.upsamples:
             x = upsample(x)
 
-
         if self.use_noise:
             noise = self.noise_module(x)
         else:
@@ -408,14 +412,13 @@ class Decoder1d(nn.Module):
         if self.use_loudness:
             x, amplitude = x.split(x.shape[1] // 2, 1)
             x = x * torch.sigmoid(amplitude)
-            
+
         x = torch.tanh(x)
-        
+
         if self.use_noise:
             x = x + noise
-        
-        return x
 
+        return x
 
 
 def amp_to_impulse_response(amp, target_size):
@@ -441,6 +444,7 @@ def amp_to_impulse_response(amp, target_size):
 
     return amp
 
+
 def fft_convolve(signal, kernel):
     """
     convolves signal by kernel on the last dimension
@@ -457,14 +461,14 @@ def fft_convolve(signal, kernel):
 class NoiseGeneratorV2(nn.Module):
 
     def __init__(
-        self,
-        in_size: int,
-        hidden_size: int,
-        data_size: int,
-        ratios: int,
-        noise_bands: int,
-        n_channels: int = 1,
-        activation = lambda dim: nn.LeakyReLU(.2),
+            self,
+            in_size: int,
+            hidden_size: int,
+            data_size: int,
+            ratios: int,
+            noise_bands: int,
+            n_channels: int = 1,
+            activation=lambda dim: nn.LeakyReLU(.2),
     ):
         super().__init__()
         net = []
@@ -524,9 +528,10 @@ class GRU(nn.Module):
         self.enabled = True
 
         self.to_out = normalization(
-            cc.Conv1d(hidden_size, out_size, kernel_size=3, padding=cc.get_padding(3, dilation=1))) #padding same
-        
-        
+            cc.Conv1d(hidden_size,
+                      out_size,
+                      kernel_size=3,
+                      padding=cc.get_padding(3, dilation=1)))  #padding same
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         x = x.permute(0, 2, 1)
@@ -557,7 +562,6 @@ class AutoEncoder(nn.Module):
         pqmf_bands=0,
         use_loudness: bool = False,
         use_noise: bool = False,
-
     ):
         super().__init__()
         out_channels = in_channels
@@ -599,19 +603,19 @@ class AutoEncoder(nn.Module):
             recurent_layer=recurrent_layer,
             activation=activation,
             use_norm=use_norm,
-            use_loudness=use_loudness, 
+            use_loudness=use_loudness,
             use_noise=use_noise)
 
     def forward(self,
                 x: Tensor,
                 with_z: bool = False,
                 with_multi: bool = False) -> Tensor:
-        
+
         if self.pqmf_bands > 1:
             x = self.pqmf(x)
-        
-        z = self.encoder(x) 
-            
+
+        z = self.encoder(x)
+
         x = self.decoder(z)
 
         if self.pqmf_bands > 1:
@@ -629,8 +633,7 @@ class AutoEncoder(nn.Module):
             x_multiband = self.pqmf(x)
         else:
             x_multiband = x
-            
-        
+
         z = self.encoder(x_multiband)
 
         if with_multi:
@@ -648,6 +651,5 @@ class AutoEncoder(nn.Module):
 
         if with_multi:
             return x, x_multiband
-        
-        return x
 
+        return x
