@@ -31,8 +31,9 @@ Once the autoencoder is trained, it must be exported to a torchscript .pt file :
 
 It is possible to skip this whole phase and use a pretrained autoencoder such as Encodec, wrapped in a nn.module with encode and decode methods. 
 
-### Model training
+### Diffusion model training
 The model training is configured with gin config files.
+
 To train the audio to audio model :
 ```bash
  python train_diffusion.py --db_path /path/to/lmdb --config midi --dataset_type midi --gpu #
