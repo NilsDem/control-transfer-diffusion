@@ -147,10 +147,10 @@ class Base(nn.Module):
             x1 = self.emb_model.encode(x1)
             x1_toz = self.emb_model.encode(x1_toz)
 
-        #if x1.shape[-1] != time_cond.shape[-1]:
-        #    time_cond = torch.nn.functional.interpolate(time_cond,
-        #                                                size=(x1.shape[-1]),
-        #                                                mode="nearest")
+        if x1.shape[-1] != time_cond.shape[-1]:
+            time_cond = torch.nn.functional.interpolate(time_cond,
+                                                        size=(x1.shape[-1]),
+                                                        mode="nearest")
 
         return x1, x1_toz, time_cond, None, None
 

@@ -1,5 +1,4 @@
 import gin
-
 gin.add_config_file_search_path('./diffusion/configs')
 
 import torch
@@ -7,10 +6,7 @@ import os
 import numpy as np
 
 from diffusion.model import EDM_ADV
-from diffusion.networks import UNET1D, Encoder1D
 from diffusion.utils.general import DummyAccelerator
-#from accelerate import Accelerator
-from diffusion.utils.dataset import get_dataset
 from dataset import SimpleDataset
 
 import argparse
@@ -60,12 +56,11 @@ def main(args):
     model = model.to(model.accelerator.device)
 
     ######### GET THE DATASET #########
-    #dataset, valset, collate_fn = get_dataset(dataset_type = args.dataset_type, db_path = args.db_path, use_cache = args.use_cache, num_recache = args.num_recache)
 
     if args.dataset_type == "waveform":
         dataset = SimpleDataset(path=args.db_path, keys=["waveform"])
         dataset, valset = torch.utils.data.random_split(
-            dataset, (len(dataset) - 200, 200))
+            dataset, (len(dataset) - int(0.5*len(dataset)), int(0.5*len(dataset))))
 
         x_length = gin.query_parameter("%X_LENGTH")
 
@@ -90,7 +85,7 @@ def main(args):
     elif args.dataset_type == "midi":
         dataset = SimpleDataset(path=args.db_path, keys=["waveform", "pr"])
         dataset, valset = torch.utils.data.random_split(
-            dataset, (len(dataset) - 200, 200))
+            dataset, (len(dataset) - int(0.9*len(dataset)), int(0.9*len(dataset))))
 
         x_length = gin.query_parameter("%X_LENGTH")
         ae_ratio = gin.query_parameter("%AE_FACTOR")
