@@ -7,3 +7,4 @@ numpy>=1.26
 gin-config
 pretty_midi
 cached-conv>=2.5.0
+cqt_pytorch==0.0.5

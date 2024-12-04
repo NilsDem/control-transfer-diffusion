@@ -5,5 +5,5 @@
 *libtorch*
 **/runs
 samples
-pretrained
+pretrained/*
 *.pt

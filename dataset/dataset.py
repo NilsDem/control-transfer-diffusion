@@ -1,12 +1,13 @@
 import torch
 import lmdb
-from acids_datasets import AudioExample
+from .audio_example import AudioExample
 from random import random
 from tqdm import tqdm
 import numpy as np
 
 
 class SimpleDataset(torch.utils.data.Dataset):
+
     def __init__(
         self,
         path,
@@ -25,7 +26,6 @@ class SimpleDataset(torch.utils.data.Dataset):
         with self.env.begin() as txn:
             self.keys = list(txn.cursor().iternext(values=False))
         self.buffer_keys = keys
-        
 
     def __len__(self):
         return len(self.keys)
@@ -35,7 +35,7 @@ class SimpleDataset(torch.utils.data.Dataset):
         with self.env.begin() as txn:
             ae = AudioExample(txn.get(self.keys[index]))
         out = {}
-        
+
         for key in self.buffer_keys:
             if key == "metadata":
                 out[key] = ae.get_metadata()
@@ -127,7 +127,7 @@ class CombinedDataset(torch.utils.data.Dataset):
             for idx in tqdm(range(len(self.keys[k]))):
                 datalist.append(self.datasets[k][idx])
             self.data[k] = datalist
-        
+
         self.cache = True
 
     def __getitem__(self, idx):
@@ -142,4 +142,3 @@ class CombinedDataset(torch.utils.data.Dataset):
         data["label"] = dataset_id
 
         return data
-    

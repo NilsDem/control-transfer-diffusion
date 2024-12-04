@@ -1,6 +1,5 @@
 #EDM Diffusion was adapted from the official implementation https://github.com/NVlabs/edm
 
-
 from typing import Callable, Optional
 import numpy as np
 import torch
@@ -18,18 +17,19 @@ import os
 @gin.configurable
 class Base(nn.Module):
 
-    def __init__(self,
-                 net=None,
-                 encoder=None,
-                 encoder_time=None,
-                 classifier=None,
-                 emb_model=None,
-                 data_type="audio",
-                 data_prep="waveform_transform", 
-                 time_transform = None,
-                 drop_values= [-4., -4.],
-                 sr = 0,
-                 ):
+    def __init__(
+        self,
+        net=None,
+        encoder=None,
+        encoder_time=None,
+        classifier=None,
+        emb_model=None,
+        data_type="audio",
+        data_prep="waveform_transform",
+        time_transform=None,
+        drop_values=[-4., -4.],
+        sr=0,
+    ):
         super().__init__()
 
         self.net = net
@@ -41,10 +41,9 @@ class Base(nn.Module):
         self.emb_model = emb_model
         self.data_prep = data_prep
         self.sr = sr
-        
+
         self.time_cond_drop = drop_values[0]
         self.zsem_drop = drop_values[1]
-        
 
     @property
     def device(self):
@@ -64,7 +63,6 @@ class Base(nn.Module):
 
     def _backward(self, loss):
         self.accelerator.backward(loss)
-
 
     @gin.configurable
     def cfgdrop(self, datas, guidance, values=[-2, -2]):
@@ -87,14 +85,18 @@ class Base(nn.Module):
         return alpha.reshape(-1, *((1, ) * (len(shape) - 1)))
 
     @gin.configurable
-    def get_scheduler(self, optimizer, scheduler_type, warmup_steps, decay_steps, decay_max):
+    def get_scheduler(self, optimizer, scheduler_type, warmup_steps,
+                      decay_steps, decay_max):
         if scheduler_type == "constant":
             return ExponentialLR(optimizer, gamma=1.0)
         elif scheduler_type == "linear":
+
             def lr_lambda(current_step):
                 if current_step < warmup_steps:
                     return 1.0
-                return max(decay_max, (decay_max - 1.0) / (decay_steps) * (current_step-warmup_steps) + 1.0)
+                return max(decay_max, (decay_max - 1.0) / (decay_steps) *
+                           (current_step - warmup_steps) + 1.0)
+
             return LambdaLR(optimizer, lr_lambda)
         else:
             raise "Scheduler type not implemented"
@@ -102,12 +104,11 @@ class Base(nn.Module):
     @gin.configurable
     def init_train(self, dataloader, lr):
         params = list(self.net.parameters())
-        if self.encoder is not None and self.train_encoder==True:
+        if self.encoder is not None and self.train_encoder == True:
             params += list(self.encoder.parameters())
         if self.encoder_time is not None and self.train_encoder_time == True:
             params += list(self.encoder_time.parameters())
-            
-        
+
         self.opt = AdamW(params, lr=lr, betas=(0.9, 0.999))
         self.scheduler = self.get_scheduler(self.opt)
         self.step = 0
@@ -128,29 +129,30 @@ class Base(nn.Module):
     @gin.configurable
     @torch.no_grad()
     def prep_data(self, batch, device=None):
-        
+
         x1 = batch["x"].to(device)
         x1_toz = batch["x_toz"].to(device)
         x1_time_cond = batch.get("x_time_cond", None)
-        
+
         if self.time_transform is not None:
             if x1_time_cond is not None:
                 time_cond = self.time_transform(x1_time_cond.to(device))
             else:
                 time_cond = self.time_transform(x1)
-                
+
         else:
             time_cond = x1_time_cond.to(device)
-        
-        if x1_toz.shape[1]==1:
+
+        if x1_toz.shape[1] == 1:
             x1 = self.emb_model.encode(x1)
             x1_toz = self.emb_model.encode(x1_toz)
-            
-        time_cond_add = batch.get("time_cond_add", None)
-        time_cond_add = time_cond_add.to(device) if time_cond_add is not None else None
-        
-        return x1, x1_toz, time_cond, None, time_cond_add
-            
+
+        #if x1.shape[-1] != time_cond.shape[-1]:
+        #    time_cond = torch.nn.functional.interpolate(time_cond,
+        #                                                size=(x1.shape[-1]),
+        #                                                mode="nearest")
+
+        return x1, x1_toz, time_cond, None, None
 
     def encode(self, x: torch.Tensor):
         #assert self.encoder is not None
@@ -172,7 +174,6 @@ class Base(nn.Module):
 
         return x_swap, indices
 
-
     @gin.configurable
     def fit(self,
             dataset,
@@ -185,37 +186,36 @@ class Base(nn.Module):
             steps_save=25000,
             guidance=0.15,
             validloader=None,
-            train_encoder = True,
-            train_encoder_time= True,
-            use_ema = True,
-            device = "cpu",
-            use_context = True):
-        
+            train_encoder=True,
+            train_encoder_time=True,
+            use_ema=True,
+            device="cpu",
+            use_context=True):
+
         self.train_encoder = train_encoder
         self.train_encoder_time = train_encoder_time
         self.use_ema = use_ema
-        
+
         dataloader = self.init_train(dataloader=dataloader)
 
         if restart_step > 0:
             state_dict = torch.load(f"{model_dir}/checkpoint" +
-                                    str(restart_step) + ".pt",map_location = "cpu")
-            
+                                    str(restart_step) + ".pt",
+                                    map_location="cpu")
+
             self.load_state_dict(state_dict["model_state"], strict=False)
             self.opt.load_state_dict(state_dict["opt_state"])
             self.step = restart_step + 1
 
             print("Restarting from step ", self.step)
-        
+
         if self.use_ema:
-            params = list(self.net.parameters()) 
+            params = list(self.net.parameters())
             if self.encoder_time is not None:
                 params += list(self.encoder_time.parameters())
             if self.encoder is not None:
                 params += list(self.encoder.parameters())
             ema = ExponentialMovingAverage(params, decay=0.999)
-            
-            
 
         if self.accelerator.is_main_process:
             logger = SummaryWriter(log_dir=model_dir + "/logs")
@@ -226,14 +226,14 @@ class Base(nn.Module):
         n_epochs = max_steps // len(dataloader) + 1
         losses_sum = {}
         losses_sum_count = {}
-        
-        
+
         with open(os.path.join(model_dir, "config.gin"), "w") as config_out:
             config_out.write(gin.operative_config_str())
 
         for e in range(n_epochs):
             for batch in dataloader:
-                x1, x1_toz, time_cond, cond, time_cond_add = self.prep_data(batch, device = device)
+                x1, x1_toz, time_cond, cond, time_cond_add = self.prep_data(
+                    batch, device=device)
 
                 if x1_toz is not None:
                     if self.encoder is not None:
@@ -255,29 +255,31 @@ class Base(nn.Module):
                             time_cond = self.encoder_time(time_cond)
                 else:
                     time_cond = time_cond
-                    
+
                 if guidance > 0:
-                    time_cond_drop = self.cfgdrop([time_cond], guidance, [self.time_cond_drop])[0]
+                    time_cond_drop = self.cfgdrop([time_cond], guidance,
+                                                  [self.time_cond_drop])[0]
                 else:
                     time_cond_drop = time_cond
-                    
-                
+
                 if cond is not None:
                     zsem = torch.cat((zsem, cond), -1)
-                    
-                if time_cond_add is not None and use_context==False:
-                    time_cond_add =  self.cfgdrop([time_cond_add], 0.2, [self.time_cond_drop])[0]
-                    time_cond_full = torch.cat((time_cond_drop, time_cond_add), 1)
+
+                if time_cond_add is not None and use_context == False:
+                    time_cond_add = self.cfgdrop([time_cond_add], 0.2,
+                                                 [self.time_cond_drop])[0]
+                    time_cond_full = torch.cat((time_cond_drop, time_cond_add),
+                                               1)
                 else:
                     time_cond_full = time_cond_drop
-                    
+
                 lossdict = self.training_step(x1,
                                               time_cond=time_cond_full,
                                               zsem=zsem,
                                               time_cond_true=time_cond,
-                                              zsem_true = zsem)
-                                              #context = time_cond_add if use_context == True else None)
-                
+                                              zsem_true=zsem)
+                #context = time_cond_add if use_context == True else None)
+
                 if self.use_ema:
                     ema.update()
 
@@ -297,130 +299,124 @@ class Base(nn.Module):
                                           global_step=self.step)
                         losses_sum[k] = 0.
                         losses_sum_count[k] = 0
-                        
-  
-                if self.step % steps_valid == 0 and self.step >0:
+
+                if self.step % steps_valid == 0 and self.step > 0:
                     with torch.no_grad():
                         if self.accelerator.is_main_process:
                             self.accelerator.print("Validation")
                             ## Validation
                             lossval = {}
-                            for i,batch in enumerate(validloader):
+                            for i, batch in enumerate(validloader):
                                 x1, x1_toz, time_cond, cond, time_cond_add = self.prep_data(
                                     batch, device=self.device)
-                                
-        
+
                                 if x1_toz is not None:
                                     zsem = self.encoder(
-                                        x1_toz) if self.encoder is not None else x1_toz
+                                        x1_toz
+                                    ) if self.encoder is not None else x1_toz
                                 else:
                                     zsem = None
 
                                 if cond is not None:
                                     zsem = torch.cat((zsem, cond), -1)
-                                
-                                    
+
                                 time_cond = self.encoder_time(
                                     time_cond
                                 ) if self.encoder_time is not None else time_cond
-                                
+
                                 #time_cond = time_cond[..., time_cond.shape[-1]//4:-time_cond.shape[-1]//4]
-                                
+
                                 if time_cond_add is not None:
-                                    time_cond = torch.cat((time_cond, time_cond_add), 1)
-                                    
+                                    time_cond = torch.cat(
+                                        (time_cond, time_cond_add), 1)
 
                                 lossdict = self.valid_step(x1,
-                                                        time_cond=time_cond,
-                                                        zsem=zsem)
+                                                           time_cond=time_cond,
+                                                           zsem=zsem)
 
                                 for k in lossdict:
-                                    lossval[k] = lossval.get(k, 0.) + lossdict[k]
-                                    
+                                    lossval[k] = lossval.get(k,
+                                                             0.) + lossdict[k]
+
                                 if i == 100:
                                     break
 
                             for k in lossval:
                                 logger.add_scalar('Loss/valid/' + k,
-                                                lossval[k] / 100,
-                                                global_step=self.step)
-                                
-                                
-                                
+                                                  lossval[k] / 100,
+                                                  global_step=self.step)
+
                             with ema.average_parameters():
                                 lossval = {}
-                                for i,batch in enumerate(validloader):
+                                for i, batch in enumerate(validloader):
                                     x1, x1_toz, time_cond, cond, time_cond_add = self.prep_data(
                                         batch, device=self.device)
-                                    
-            
+
                                     if x1_toz is not None:
                                         zsem = self.encoder(
-                                            x1_toz) if self.encoder is not None else x1_toz
+                                            x1_toz
+                                        ) if self.encoder is not None else x1_toz
                                     else:
                                         zsem = None
 
                                     if cond is not None:
                                         zsem = torch.cat((zsem, cond), -1)
-                                    
-                                        
+
                                     time_cond = self.encoder_time(
                                         time_cond
                                     ) if self.encoder_time is not None else time_cond
-                                    
-                                    
-                                    if time_cond_add is not None:
-                                        time_cond = torch.cat((time_cond, time_cond_add), 1)
-                                        
 
-                                    lossdict = self.valid_step(x1,
-                                                            time_cond=time_cond,
-                                                            zsem=zsem)
+                                    if time_cond_add is not None:
+                                        time_cond = torch.cat(
+                                            (time_cond, time_cond_add), 1)
+
+                                    lossdict = self.valid_step(
+                                        x1, time_cond=time_cond, zsem=zsem)
 
                                     for k in lossdict:
-                                        lossval[k] = lossval.get(k, 0.) + lossdict[k]
-                                        
+                                        lossval[k] = lossval.get(
+                                            k, 0.) + lossdict[k]
+
                                     if i == 100:
                                         break
 
                                 for k in lossval:
                                     logger.add_scalar('Loss/valid_EMA/' + k,
-                                                    lossval[k] / 100,
-                                                    global_step=self.step)
-                            
+                                                      lossval[k] / 100,
+                                                      global_step=self.step)
 
                             ## Data out
 
                             x1 = x1[:6].to(self.device)
-                            time_cond = time_cond[:6] if time_cond is not None else None
+                            time_cond = time_cond[:
+                                                  6] if time_cond is not None else None
                             zsem = zsem[:6] if zsem is not None else None
                             x0 = self.sample_prior(x1.shape)
-                            
 
                             x1_rec = self.sample(x0,
-                                                nb_step=40,
-                                                time_cond=time_cond,
-                                                zsem=zsem)
+                                                 nb_step=40,
+                                                 time_cond=time_cond,
+                                                 zsem=zsem)
 
-                            
                             audio_true = self.emb_model.decode(x1).cpu()
                             audio_rec = self.emb_model.decode(x1_rec).cpu()
 
                             audio = torch.cat(
                                 (audio_true,
-                                torch.zeros(audio_true.shape[0], 1,
-                                            20000), audio_rec), -1)
-                            
+                                 torch.zeros(audio_true.shape[0], 1,
+                                             20000), audio_rec), -1)
+
                             audio = audio.reshape(-1)
 
                             logger.add_audio("audio",
-                                            audio.detach(),
-                                            global_step=self.step,
-                                            sample_rate=self.sr)
-                    
+                                             audio.detach(),
+                                             global_step=self.step,
+                                             sample_rate=self.sr)
+
                 if self.step % steps_save == 0:
                     self.accelerator.wait_for_everyone()
-                    self.save_model(model_dir, ema = ema if self.use_ema else None)
+                    self.save_model(model_dir,
+                                    ema=ema if self.use_ema else None)
 
                 if self.accelerator.is_main_process:
                     self.tepoch.update(1)
@@ -430,17 +426,24 @@ class Base(nn.Module):
     def save_model(self, model_dir, ema=None):
         model = self.accelerator.unwrap_model(self)
         d = {
-            "model_state": {k:v for k,v in model.state_dict().items() if "emb_model" not in k},
+            "model_state": {
+                k: v
+                for k, v in model.state_dict().items() if "emb_model" not in k
+            },
             "opt_state": self.opt.state_dict()
         }
 
         self.accelerator.save(
             d, model_dir + "/checkpoint" + str(self.step) + ".pt")
-        
+
         if ema is not None:
             with ema.average_parameters():
                 d = {
-                    "model_state": {k:v for k,v in model.state_dict().items() if "emb_model" not in k},
+                    "model_state": {
+                        k: v
+                        for k, v in model.state_dict().items()
+                        if "emb_model" not in k
+                    },
                 }
 
                 self.accelerator.save(
@@ -460,7 +463,7 @@ class EDM(Base):
         p_mean: float = -1.2,
         p_std: float = 1.2,
         rho: float = 7,
-        time_cond_warmup = 0,
+        time_cond_warmup=0,
         **basekwargs,
     ):
         super().__init__(**basekwargs)
@@ -476,12 +479,12 @@ class EDM(Base):
 
     def estimate_std(
         self,
-        loader = None,
+        loader=None,
         n_batches: int = 128,
     ) -> float:
         xlist = []
         print("Estimating sigma...")
-        
+
         for i, batch in enumerate(loader):
             if i >= n_batches:
                 break
@@ -497,7 +500,7 @@ class EDM(Base):
         c_out = sigma * self.sdata / (sigma**2 + self.sdata**2).sqrt()
         c_in = 1 / (self.sdata**2 + sigma**2).sqrt()
         c_noise = 0.25 * sigma.log()
-        
+
         return c_skip, c_out, c_in, c_noise
 
     def _get_weight(self, sigma: torch.Tensor) -> torch.Tensor:
@@ -531,19 +534,21 @@ class EDM(Base):
              guidance_type: str = "both"):
 
         c_skip, c_out, c_in, c_noise = self._get_scalings(sigma)
-        f_xy = self.net(c_in * x,
-                        time=c_noise.reshape(-1),#.squeeze(),
-                        time_cond=time_cond,
-                        zsem=zsem)
+        f_xy = self.net(
+            c_in * x,
+            time=c_noise.reshape(-1),  #.squeeze(),
+            time_cond=time_cond,
+            zsem=zsem)
 
         if guidance != 1:
-           # print("using guidance")
+            # print("using guidance")
             if guidance_type == "time_cond" or guidance_type == "both":
                 time_cond = self.time_cond_drop * torch.ones_like(
                     time_cond) if time_cond is not None else None
 
             if guidance_type == "zsem" or guidance_type == "both":
-                zsem = self.zsem_drop * torch.ones_like(zsem) if zsem is not None else None
+                zsem = self.zsem_drop * torch.ones_like(
+                    zsem) if zsem is not None else None
 
             f_x = self.net(c_in * x,
                            time=c_noise.reshape(-1),
@@ -557,16 +562,13 @@ class EDM(Base):
     def sample_prior(self, x0_shape):
         return torch.randn(x0_shape).to(self.device)
 
-
-
     def training_step(self, x1: torch.Tensor,
                       time_cond: Optional[torch.Tensor],
                       zsem: Optional[torch.Tensor], **kwargs) -> torch.Tensor:
 
-
         if self.step < self.time_cond_warmup:
             time_cond = torch.zeros_like(time_cond)
-            
+
         b, *_ = x1.shape
         data_shape = (b, *([1] * (len(x1.shape) - 1)))
         sigma = self._get_sigma(data_shape)
@@ -597,7 +599,7 @@ class EDM(Base):
         data_shape = (b, *([1] * (len(x1.shape) - 1)))
         sigma = self._get_sigma(data_shape)
         x_noisy = x1 + torch.randn_like(x1) * sigma
-        
+
         d = self._model_forward(x=x1,
                                 noisy=x_noisy,
                                 sigma=sigma,
@@ -612,7 +614,7 @@ class EDM(Base):
     @torch.no_grad()
     def sample(self,
                x0: Optional[torch.Tensor] = None,
-               nb_step=  256,
+               nb_step=256,
                time_cond: Optional[torch.Tensor] = None,
                zsem: Optional[torch.Tensor] = None,
                sigma_max=None,
@@ -620,7 +622,7 @@ class EDM(Base):
                guidance=1,
                guidance_type="both",
                verbose=True,
-               special_fwd = None):
+               special_fwd=None):
         sigma_max = sigma_max if sigma_max is not None else self.sigma_max
         sigma_min = sigma_min if sigma_min is not None else self.sigma_min
 
@@ -631,17 +633,17 @@ class EDM(Base):
             rho=self.rho,
             fwd_fn=special_fwd if special_fwd is not None else self._fwd,
             nb_step=nb_step,
-            time_cond = time_cond,
-            zsem = zsem,
-            guidance =guidance,
-            guidance_type =guidance_type,
+            time_cond=time_cond,
+            zsem=zsem,
+            guidance=guidance,
+            guidance_type=guidance_type,
             verbose=verbose,
         )
 
     def _heun_sample(
         self,
         base: torch.Tensor,
-        time_cond ,
+        time_cond,
         zsem,
         guidance,
         guidance_type,
@@ -652,12 +654,11 @@ class EDM(Base):
         nb_step,
         verbose: bool = False,
     ):
-        
+
         S_churn = 0.
         S_min = 0.0
-        S_max= float("inf")
+        S_max = float("inf")
         S_noise = 1.0
-        
         """https://github.com/NVlabs/edm/blob/main/generate.py#L25"""
         step_indices = torch.arange(nb_step,
                                     dtype=torch.float32,
@@ -671,8 +672,6 @@ class EDM(Base):
         # Main sampling loop.
         x_next = base * t_steps[0]
         batch_size = x_next.shape[0]
-        
-        
 
         if verbose == True:
             pbar = tqdm(
@@ -680,14 +679,15 @@ class EDM(Base):
                 unit="step",
             )
         else:
-           
+
             pbar = list(enumerate(zip(t_steps[:-1], t_steps[1:])))
         for i, (t_cur, t_next) in pbar:  # 0, ..., N-1
             x_cur = x_next
 
             # Increase noise temporarily.
             gamma = min(S_churn / nb_step,
-                        torch.sqrt(torch.tensor(2.)) - 1) if S_min <= t_cur <= S_max else 0
+                        torch.sqrt(torch.tensor(2.)) -
+                        1) if S_min <= t_cur <= S_max else 0
             t_hat = torch.as_tensor(t_cur + gamma * t_cur)
             x_hat = x_cur + (
                 t_hat**2 - t_cur**2).sqrt() * S_noise * torch.randn_like(x_cur)
@@ -696,10 +696,14 @@ class EDM(Base):
             #ndim = len(x_hat.shape)-1
             _t_hat = t_hat.repeat(batch_size).view(
                 (batch_size, *(1 for _ in range(x_hat.ndim - 1))))
-            
-      
-            denoised = fwd_fn(x=x_hat, sigma=_t_hat,zsem = zsem, time_cond=time_cond, guidance=guidance, guidance_type=guidance_type)
-           
+
+            denoised = fwd_fn(x=x_hat,
+                              sigma=_t_hat,
+                              zsem=zsem,
+                              time_cond=time_cond,
+                              guidance=guidance,
+                              guidance_type=guidance_type)
+
             d_cur = (x_hat - denoised) / t_hat
             x_next = x_hat + (t_next - t_hat) * d_cur
 
@@ -707,7 +711,12 @@ class EDM(Base):
             if i < nb_step - 1:
                 _t_next = t_next.repeat(batch_size).view(
                     (batch_size, *(1 for _ in range(x_next.ndim - 1))))
-                denoised = fwd_fn(x=x_next, sigma=_t_next,zsem = zsem, time_cond=time_cond, guidance=guidance, guidance_type=guidance_type)
+                denoised = fwd_fn(x=x_next,
+                                  sigma=_t_next,
+                                  zsem=zsem,
+                                  time_cond=time_cond,
+                                  guidance=guidance,
+                                  guidance_type=guidance_type)
                 d_prime = (x_next - denoised) / t_next
                 x_next = x_hat + (t_next - t_hat) * (0.5 * d_cur +
                                                      0.5 * d_prime)
@@ -723,7 +732,7 @@ class EDM_ADV(EDM):
         *,
         reg_classifier: float,
         warmup_classifier: int,
-        warmup_timbre : int,
+        warmup_timbre: int,
         #reg_timbre: float,
         sigma_min: float = 0.002,
         sigma_max: float = 80.,
@@ -768,15 +777,14 @@ class EDM_ADV(EDM):
 
         if self.warmup_classifier > 0:
             reg_classifier = min(
-                self.reg_classifier *
-                ((self.step - self.warmup_classifier) / self.warmup_classifier),
-                self.reg_classifier) if self.step > self.warmup_classifier else 0.
+                self.reg_classifier * ((self.step - self.warmup_classifier) /
+                                       self.warmup_classifier), self.
+                reg_classifier) if self.step > self.warmup_classifier else 0.
         else:
             reg_classifier = self.reg_classifier
 
         if self.step > self.warmup_classifier and self.step % 3 == 0 and self.classifier is not None:
-            
-            
+
             classifier_loss = torch.nn.functional.mse_loss(self.classifier(
                 time_cond_true.detach()),
                                                            zsem_true.detach(),
@@ -798,8 +806,7 @@ class EDM_ADV(EDM):
             if self.step < self.warmup_timbre:
                 time_cond = self.time_cond_drop * torch.ones_like(time_cond)
 
-
-            if self.step<self.warmup_classifier or self.classifier is None:
+            if self.step < self.warmup_classifier or self.classifier is None:
                 classifier_loss = torch.tensor(0.)
 
             else:
@@ -816,7 +823,6 @@ class EDM_ADV(EDM):
             weight = self._get_weight(sigma)
             diffloss = weight * ((d - x1)**2)
             diffloss = diffloss.mean()
-
 
             loss = diffloss - reg_classifier * classifier_loss
 

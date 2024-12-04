@@ -34,12 +34,18 @@ It is possible to skip this whole phase and use a pretrained autoencoder such as
 The model training is configured with gin config files.
 To train the audio to audio model :
 ```bash
- python train_diffusion.py --db_path /data/nils/datasets/slakh/lmdb_midi/ --config midi --dataset_type midi --gpu #
+ python train_diffusion.py --db_path /path/to/lmdb --config midi --dataset_type midi --gpu #
 ```
 To train the midi-to-audio model : 
 ```bash
  python train_diffusion.py --db_path /path/to/lmdb --config main --dataset_type waveform --gpu #
 ```
 
-### Inference and evaluation
-TBA
+### Pretrained models
+
+Three pretraiend models are now available : 
+1. Audio to audio transfer model trained on [Slakh](http://www.slakh.com/)
+2. Audio to audio transfer model trained on multiple datasets (Maestro, URMP, Filobass, GuitarSet...)
+3. MIDI-to-audio model trained on [Slakh](http://www.slakh.com/)
+
+You can download the autoencoder and diffusion model checkpoints [here](https://nubo.ircam.fr/index.php/s/8xaXbQtcY4n3Mg9/download). Make sure you copy the pretrained models in `./pretrained`. The notebooks in `./notebooks` demonstrate how to load a model and generate audio from midi and audio files. You can also use the autoencoder checkpoints to train your own diffusion models.

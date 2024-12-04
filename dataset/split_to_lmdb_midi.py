@@ -51,6 +51,11 @@ flags.DEFINE_integer('num_cores',
 flags.DEFINE_integer('sampling_rate',
                      24000,
                      help='Sampling rate to use during training')
+
+flags.DEFINE_integer('ae_ratio',
+                     512,
+                     help='Compression ratio for the AutoEncoder')
+
 flags.DEFINE_integer('max_db_size',
                      180,
                      help='Maximum size (in GB) of the dataset')
@@ -58,6 +63,8 @@ flags.DEFINE_integer('max_db_size',
 flags.DEFINE_integer('max_files',
                      None,
                      help='Take a random subset of the files')
+
+
 
 
 flags.DEFINE_multi_string(
@@ -112,8 +119,8 @@ def get_midi(metadata):
     midi_data = pretty_midi.PrettyMIDI(midi_path)
 
     length = FLAGS.num_signal
-    tstart = metadata["chunk_number"] * length / 24000
-    tend = (metadata["chunk_number"] + 1) * length / 24000
+    tstart = metadata["chunk_number"] * length / flags.sampling_rate
+    tend = (metadata["chunk_number"] + 1) * length / flags.sampling_rate
 
 
     out_notes = []
@@ -127,7 +134,7 @@ def get_midi(metadata):
     midi_data.instruments[0].notes = out_notes
 
     #end = out_notes[-1].end
-    end = length / 24000
+    end = length / flags.sampling_rate
     midi_data.adjust_times([0, end], [0, end])
 
     return midi_data
@@ -150,8 +157,8 @@ def process_audio_array(audio: Tuple[int, Tuple[bytes,
     # Get the midi
     midi = get_midi(metadata)
     #print(midi.instruments[0].notes)
-    pr = midi.get_piano_roll(times=np.linspace(0, FLAGS.num_signal / 24000, FLAGS.num_signal //
-                                               512))
+    pr = midi.get_piano_roll(times=np.linspace(0, FLAGS.num_signal / FLAGS.sampling_rate, FLAGS.num_signal //
+                                               FLAGS.ae_ratio))
     # Check if no note is played
     if len(midi.instruments[0].notes) == 0:
         return audio_id, False

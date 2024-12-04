@@ -7,57 +7,56 @@ import diffusion.utils.transforms
 
 
 # Model 
-Z_LENGTH = 256
+Z_LENGTH = 128
 X_LENGTH = 131072
 AE_EMBSIZE = 32
-AE_FACTOR = 512
-SR = 44100
+AE_FACTOR = 1024
+SR = 24000
 ZT_CHANNELS = 32
 ZS_CHANNELS = 16
 
-N_MELS = 128
+N_MELS = 256
 
 # Training options
 WARMUP_STRUCTURE = 150000
 WARMUP_TIMBRE = 100000
-ADV_WEIGHT = 0.5
+ADV_WEIGHT = 0.1
 GUIDANCE_DROP = 0.2
 LR = 1e-4
 
 
 ## STRUCTURE TRANSFORM
-utils.transforms.StreamableMelSpectrogram:
+utils.transforms.PytorchCQT:
     sr = %SR
-    nfft = 1024
-    hop_size = 256
-    n_mels = %N_MELS
-    stream = False
+    num_octaves = 8
+    num_bins_per_octave = 32
+    block_length = %X_LENGTH
 
 
 ### ARCHITECTURE ### 
 networks.UNET1D:
     in_size = %AE_EMBSIZE
-    channels = [256, 512, 1024, 1024]
-    ratios = [2, 2, 2, 2]
+    channels = [256, 512, 512, 1024]
+    ratios = [1, 2, 2, 2, 2]
     time_cond_in_channels = %ZS_CHANNELS
     time_cond_channels = 128
     z_channels = %ZT_CHANNELS
     time_channels = 128
-    n_attn_layers = 1
+    n_attn_layers = 2
 
 
 encoder_timbre/networks.Encoder1D:
     in_size = %AE_EMBSIZE
     channels = [128, 256, 256, 512, %ZT_CHANNELS]
-    ratios = [2, 2, 2, 2, 2]
+    ratios = [1, 2, 2, 2, 2, 2]
     use_tanh = True
     average_out = True
 
 
 encoder_structure/networks.Encoder1D:
     in_size = %N_MELS
-    channels = [128, 256, 256, 512, %ZS_CHANNELS]
-    ratios = [1, 1, 2, 2, 1]
+    channels = [256, 256, 256, 512, %ZS_CHANNELS]
+    ratios = [1, 1, 1, 1, 1, 1]
     use_tanh = True
     average_out = False
 
@@ -65,7 +64,7 @@ encoder_structure/networks.Encoder1D:
 classifier/networks.Encoder1D:
     in_size= %ZS_CHANNELS
     channels= [32, 64, 128, 128, %ZT_CHANNELS]
-    ratios= [2, 2, 2, 2, 2]
+    ratios= [1, 2, 2, 2, 2, 2]
     use_tanh = True
     average_out=True
 
@@ -80,10 +79,10 @@ model.EDM_ADV:
     reg_classifier = %ADV_WEIGHT
     warmup_classifier = %WARMUP_STRUCTURE
     warmup_timbre = %WARMUP_TIMBRE        
-    time_transform = @utils.transforms.StreamableMelSpectrogram()
+    time_transform = @utils.transforms.PytorchCQT()
     data_type = "audio"
     drop_values = [-4.,-4.]
-    sdata = 0.3
+    sdata = 0.65
 
 
 model.EDM_ADV.fit: 
