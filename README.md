@@ -2,8 +2,9 @@
 
 Official repository for  _Combining audio control and style transfer using latent diffusion_ by Nils Demerlé, Philippe Esling, Guillaume Doras and David Genova accepted at ISMIR 2024 ([paper link](https://arxiv.org/pdf/2408.00196)).
 
-Training the model requires three steps : processing the dataset, training an autoencoder, then training the diffusion model.
 
+## Model training
+Training the model requires three steps : processing the dataset, training an autoencoder, then training the diffusion model.
 
 ### Dataset preparation
 
@@ -41,11 +42,11 @@ To train the midi-to-audio model :
  python train_diffusion.py --db_path /path/to/lmdb --config main --dataset_type waveform --gpu #
 ```
 
-### Pretrained models
+## Inference and pretrained models
 
 Three pretraiend models are now available : 
 1. Audio to audio transfer model trained on [Slakh](http://www.slakh.com/)
 2. Audio to audio transfer model trained on multiple datasets (Maestro, URMP, Filobass, GuitarSet...)
 3. MIDI-to-audio model trained on [Slakh](http://www.slakh.com/)
 
-You can download the autoencoder and diffusion model checkpoints [here](https://nubo.ircam.fr/index.php/s/8xaXbQtcY4n3Mg9/download). Make sure you copy the pretrained models in `./pretrained`. The notebooks in `./notebooks` demonstrate how to load a model and generate audio from midi and audio files. You can also use the autoencoder checkpoints to train your own diffusion models.
+You can download the autoencoder and diffusion model checkpoints [here](https://nubo.ircam.fr/index.php/s/8xaXbQtcY4n3Mg9/download). Make sure you copy the pretrained models in `./pretrained`. The notebooks in `./notebooks` demonstrate how to load a model and generate audio from midi and audio files.
