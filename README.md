@@ -9,6 +9,13 @@ We are currently working on a real-time implementation of this model called AFTE
 
 
 ## Model training
+
+Prior to training, install the required dependancies using :
+
+```bash
+pip install -r "requirements.txt"
+```
+
 Training the model requires three steps : processing the dataset, training an autoencoder, then training the diffusion model.
 
 ### Dataset preparation
