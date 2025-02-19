@@ -74,7 +74,7 @@ model.EDM_ADV:
     net=@networks.UNET1D()
     encoder = @encoder_timbre/networks.Encoder1D()
     encoder_time = @encoder_structure/networks.Encoder1D()
-    classifier = None
+    classifier = @classifier/networks.Encoder1D()
     data_prep = "normal"
     reg_classifier = %ADV_WEIGHT
     warmup_classifier = %WARMUP_STRUCTURE
